@@ -1,6 +1,10 @@
 node_modules
-dist
+.env
 .DS_Store
+dist
+.vercel
+.vercel_build_output
+.env*.local
 server/public
 vite.config.ts.*
 *.tar.gz
