@@ -1,3 +1,17 @@
+// Load environment variables from .env files
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..');
+
+// Load .env files with absolute paths (server/.env takes precedence)
+dotenv.config({ path: path.join(rootDir, '.env') });
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";

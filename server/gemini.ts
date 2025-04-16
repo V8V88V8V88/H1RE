@@ -2,7 +2,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
 
 // Initialize the Gemini API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const apiKey = process.env.GEMINI_API_KEY;
+console.log("GEMINI_API_KEY status:", apiKey ? "Present (value starts with: " + apiKey.substring(0, 5) + "...)" : "Missing");
+if (!apiKey) {
+  console.error("GEMINI_API_KEY is missing in .env file");
+}
+const genAI = new GoogleGenerativeAI(apiKey || "");
 // Using gemini-2.0-flash model for improved speed and performance
 // Optimal for our use case of analyzing text content with fast responses
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -63,6 +68,10 @@ function getExperienceLevelDescription(level: string): string {
 }
 
 export async function analyzeResume(request: ResumeAnalysisRequest): Promise<ResumeAnalysisResponse> {
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured. Please add it to your .env file.");
+  }
+  
   const { resumeText, jobRole, customJobRole, experienceLevel } = request;
   
   // Get job role description
@@ -159,6 +168,12 @@ export async function analyzeResume(request: ResumeAnalysisRequest): Promise<Res
     return parsedResponse;
   } catch (error: any) {
     console.error("Error analyzing resume with Gemini:", error.message);
+    
+    // Provide more specific error messages for API key issues
+    if (error.message.includes("403 Forbidden") || error.message.includes("unregistered callers")) {
+      throw new Error("Invalid or unregistered Gemini API key. Please make sure your API key is valid and properly set up in the Google AI Studio.");
+    }
+    
     throw new Error(`Failed to analyze resume: ${error.message}`);
   }
 }
