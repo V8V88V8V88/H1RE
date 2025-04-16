@@ -3,8 +3,9 @@ import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
 
 // Initialize the Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-// Model name for Gemini API v1 (not v1beta)
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+// Using gemini-2.0-flash model for improved speed and performance
+// Optimal for our use case of analyzing text content with fast responses
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 // Job role descriptions
 const jobRoleDescriptions: Record<string, string> = {
