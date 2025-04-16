@@ -112,7 +112,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
         <Button 
           onClick={handleAnalyzeClick}
           disabled={!canAnalyze || isAnalyzing}
-          className="w-full rounded-xl theme-transition bg-gradient-to-r from-primary to-blue-500 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
+          className="w-full rounded-xl theme-transition bg-gradient-to-r from-[#0078d4] to-[#50b0ff] hover:shadow-lg hover:shadow-[#0078d4]/20 transition-all duration-300"
         >
           <Search className="mr-2 h-4 w-4" /> 
           {isAnalyzing ? "Analyzing..." : "Analyze Resume"}
