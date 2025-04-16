@@ -59,7 +59,7 @@ Select from a range of job roles or create a custom role to get feedback specifi
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/resume-analyzer-ai.git
+   git clone https://github.com/v8v88v8v88/resume-analyzer-ai.git
    cd resume-analyzer-ai
    ```
 
@@ -123,9 +123,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
