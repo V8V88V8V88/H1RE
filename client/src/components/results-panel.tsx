@@ -4,6 +4,7 @@ import AnalysisCard from "@/components/analysis-card";
 import { cn } from "@/lib/utils";
 import { generatePDFReport } from '../lib/pdf-generator';
 import { useState } from 'react';
+import { Briefcase, BarChart } from 'lucide-react';
 
 interface ResultsPanelProps {
   result: ResumeAnalysisResponse;
@@ -21,7 +22,10 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
     grammarFeedback,
     atsFeedback,
     keywordFeedback,
-    recommendations
+    recommendations,
+    jobRole,
+    customJobRole,
+    experienceLevel
   } = result;
 
   // Helper function to get appropriate color class based on score
@@ -32,8 +36,54 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
     return "text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30";
   };
 
+  // Format job role for display
+  const formatJobRole = (role: string | undefined | null): string => {
+    if (!role) return "Not specified";
+    
+    if (role === "custom" && customJobRole) {
+      return customJobRole;
+    }
+    return role.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  // Format experience level for display
+  const formatExperienceLevel = (level: string | undefined | null): string => {
+    if (!level) return "Not specified";
+    
+    switch (level) {
+      case "entry": return "Entry Level (0-2 years)";
+      case "mid": return "Mid Level (3-5 years)";
+      case "senior": return "Senior Level (6+ years)";
+      case "executive": return "Executive Level";
+      default: return level.charAt(0).toUpperCase() + level.slice(1);
+    }
+  };
+
   return (
     <div className="flex flex-col space-y-6">
+      {/* Target Position Information */}
+      <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+        <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Analysis Results</h2>
+        </div>
+        <div className="p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div className="flex items-center flex-1">
+            <Briefcase className="h-5 w-5 text-primary" />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Target Position</p>
+              <p className="text-base font-semibold">{formatJobRole(jobRole)}</p>
+            </div>
+          </div>
+          <div className="flex items-center flex-1">
+            <BarChart className="h-5 w-5 text-primary" />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Experience Level</p>
+              <p className="text-base font-semibold">{formatExperienceLevel(experienceLevel)}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Overall Score Card */}
       <ScoreCard 
         overallScore={overallScore}

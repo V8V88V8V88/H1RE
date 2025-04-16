@@ -20,10 +20,14 @@ function Home() {
   
   const analyzeResumeMutation = useMutation({
     mutationFn: async (data: ResumeAnalysisRequest) => {
+      console.log("Sending analysis request:", data);
       const response = await apiRequest("POST", "/api/analyze-resume", data);
-      return response.json() as Promise<ResumeAnalysisResponse>;
+      const responseData = await response.json() as ResumeAnalysisResponse;
+      console.log("Received analysis response:", responseData);
+      return responseData;
     },
     onSuccess: (data) => {
+      console.log("Setting analysis result:", data);
       setAnalysisResult(data);
       toast({
         title: "Analysis Complete!",
@@ -31,6 +35,7 @@ function Home() {
       });
     },
     onError: (error) => {
+      console.error("Analysis error:", error);
       toast({
         title: "Analysis Failed",
         description: error.message || "An error occurred while analyzing your resume.",

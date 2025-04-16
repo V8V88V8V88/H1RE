@@ -77,6 +77,9 @@ export const resumeAnalysisResponseSchema = z.object({
   keywordScore: z.number(),
   formatScore: z.number(),
   level: z.string(),
+  jobRole: z.string(),
+  customJobRole: z.string().optional(),
+  experienceLevel: z.string(),
   earnedBadges: z.array(badge),
   grammarFeedback: z.object({
     issues: z.array(grammarIssue),

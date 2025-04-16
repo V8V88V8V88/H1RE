@@ -68,10 +68,6 @@ function getExperienceLevelDescription(level: string): string {
 }
 
 export async function analyzeResume(request: ResumeAnalysisRequest): Promise<ResumeAnalysisResponse> {
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not configured. Please add it to your .env file.");
-  }
-  
   const { resumeText, jobRole, customJobRole, experienceLevel } = request;
   
   // Get job role description
@@ -165,7 +161,16 @@ export async function analyzeResume(request: ResumeAnalysisRequest): Promise<Res
     
     const jsonResponse = jsonMatch[0];
     const parsedResponse = JSON.parse(jsonResponse) as ResumeAnalysisResponse;
-    return parsedResponse;
+    
+    // Add the job role and experience level to the response
+    const enrichedResponse: ResumeAnalysisResponse = {
+      ...parsedResponse,
+      jobRole,
+      customJobRole,
+      experienceLevel
+    };
+    
+    return enrichedResponse;
   } catch (error: any) {
     console.error("Error analyzing resume with Gemini:", error.message);
     

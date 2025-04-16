@@ -54,6 +54,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         atsFeedback: analysisResult.atsFeedback,
         keywordFeedback: analysisResult.keywordFeedback,
         recommendations: analysisResult.recommendations,
+        jobRole: analysisResult.jobRole,
+        customJobRole: analysisResult.customJobRole,
+        experienceLevel: analysisResult.experienceLevel,
         createdAt: timestamp,
       });
       
