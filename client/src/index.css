@@ -21,31 +21,61 @@ html.dark {
     @apply font-sans antialiased text-foreground min-h-screen transition-colors duration-300;
   }
   
-  /* Apple-like styles */
+  /* Theme-specific styles */
   .dark body {
     @apply bg-black;
   }
   
   .light body {
-    @apply bg-[#f5f5f7];
+    @apply bg-white;
   }
   
-  /* Apple-style glass elements */
+  /* Glass elements */
   .apple-glass {
-    @apply backdrop-blur-xl border border-white/10 bg-white/5 dark:bg-black/40 dark:border-white/5;
+    @apply backdrop-blur-xl border border-gray-300/20 bg-white/80 dark:border-white/10 dark:bg-black/60;
   }
   
   .apple-glass-light {
-    @apply backdrop-blur-xl bg-white/80 dark:bg-black/80 border border-white/20 dark:border-white/10;
+    @apply backdrop-blur-xl bg-white/90 dark:bg-black/70 border border-gray-200/30 dark:border-white/10;
   }
   
-  /* Apple-style card */
+  /* Card styles with different colors for light/dark modes */
   .apple-card {
-    @apply rounded-2xl shadow-lg bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/10 dark:border-white/5;
+    @apply rounded-2xl shadow-lg border;
+    @apply bg-white/90 border-gray-200/50 dark:bg-black/80 dark:border-white/10;
+    @apply backdrop-blur-xl;
+  }
+  
+  /* More contrast between elements in dark mode */
+  .dark .contrast-card {
+    @apply bg-zinc-900/90;
   }
   
   /* Smooth transitions for theme toggle */
   .theme-transition {
-    @apply transition-all duration-300 ease-in-out;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  
+  /* Better performance for hover animations */
+  .hover-scale {
+    @apply hover:shadow-lg;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Azure theme colors */
+  .text-azure {
+    @apply text-[#0078d4];
+  }
+  
+  .bg-azure {
+    @apply bg-[#0078d4];
+  }
+  
+  .border-azure {
+    @apply border-[#0078d4];
   }
 }

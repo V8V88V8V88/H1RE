@@ -45,10 +45,10 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-black dark:bg-black theme-transition">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black theme-transition">
       {/* Header */}
       <motion.header 
-        className="sticky top-0 z-50 apple-glass-light py-4 px-4 shadow-sm"
+        className="sticky top-0 z-50 apple-glass-light py-4 px-4 shadow-sm border-b border-gray-200/20 dark:border-white/5 theme-transition"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -60,8 +60,8 @@ function Home() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Sparkles className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+            <Sparkles className="h-6 w-6 text-[#0078d4]" />
+            <h1 className="text-xl font-bold bg-gradient-to-r from-[#0078d4] to-[#50b0ff] bg-clip-text text-transparent">
               Resume Analyzer AI
             </h1>
           </motion.div>
@@ -86,7 +86,7 @@ function Home() {
           >
             <div className="text-center">
               <motion.h2 
-                className="mb-2 text-3xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent"
+                className="mb-2 text-3xl font-bold bg-gradient-to-r from-[#0078d4] to-[#50b0ff] bg-clip-text text-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
@@ -94,7 +94,7 @@ function Home() {
                 Welcome to Resume Analyzer AI
               </motion.h2>
               <motion.p 
-                className="mb-4 text-gray-300 max-w-2xl mx-auto"
+                className="mb-4 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -112,48 +112,36 @@ function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <motion.div 
-                  className="flex flex-col items-center apple-card p-5 theme-transition"
-                  whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <div className="flex flex-col items-center apple-card p-5 theme-transition hover-scale contrast-card">
+                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#0078d4]/20 text-[#0078d4]">
                     <FileIcon className="h-7 w-7" />
                   </div>
                   <h3 className="mb-1 font-medium">Upload Resume</h3>
-                  <p className="text-center text-sm text-gray-300">Upload your resume in PDF or DOCX format</p>
-                </motion.div>
+                  <p className="text-center text-sm text-gray-500 dark:text-gray-300">Upload your resume in PDF or DOCX format</p>
+                </div>
                 
-                <motion.div 
-                  className="flex flex-col items-center apple-card p-5 theme-transition"
-                  whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <div className="flex flex-col items-center apple-card p-5 theme-transition hover-scale contrast-card">
+                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#0078d4]/20 text-[#0078d4]">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7"><path d="M20 7h-3a2 2 0 0 1-2-2V2"></path><path d="M9 22h9a2 2 0 0 0 2-2V7l-5-5H9a2 2 0 0 0-2 2v4"></path><path d="M3 15h6"></path><path d="M8 18v-6"></path><path d="M3 18h8"></path></svg>
                   </div>
                   <h3 className="mb-1 font-medium">Choose Job Role</h3>
-                  <p className="text-center text-sm text-gray-300">Select your target position for relevant feedback</p>
-                </motion.div>
+                  <p className="text-center text-sm text-gray-500 dark:text-gray-300">Select your target position for relevant feedback</p>
+                </div>
                 
-                <motion.div 
-                  className="flex flex-col items-center apple-card p-5 theme-transition"
-                  whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <div className="flex flex-col items-center apple-card p-5 theme-transition hover-scale contrast-card">
+                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#0078d4]/20 text-[#0078d4]">
                     <BarChart2 className="h-7 w-7" />
                   </div>
                   <h3 className="mb-1 font-medium">Get Analysis</h3>
-                  <p className="text-center text-sm text-gray-300">Receive detailed feedback to improve your resume</p>
-                </motion.div>
+                  <p className="text-center text-sm text-gray-500 dark:text-gray-300">Receive detailed feedback to improve your resume</p>
+                </div>
               </motion.div>
               
               <motion.button 
                 onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="rounded-xl bg-primary px-6 py-3 font-medium text-white shadow-md transition-all hover:shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-black"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="rounded-xl bg-[#0078d4] px-6 py-3 font-medium text-white shadow-md transition-all hover:shadow-lg hover:bg-[#0078d4]/90 focus:outline-none focus:ring-2 focus:ring-[#0078d4] focus:ring-offset-2 dark:focus:ring-offset-black"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.3 }}
