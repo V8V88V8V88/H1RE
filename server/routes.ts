@@ -2,7 +2,8 @@ import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { resumeAnalysisRequestSchema } from "@shared/schema";
-import { analyzeResume } from "./openai";
+// Import Gemini API implementation instead of OpenAI
+import { analyzeResume } from "./gemini";
 import multer from "multer";
 import * as mammoth from "mammoth";
 // Import pdf-parse using dynamic import to avoid debug mode issues
