@@ -3,7 +3,8 @@ import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
 
 // Initialize the Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+// Model name for Gemini API v1 (not v1beta)
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
 // Job role descriptions
 const jobRoleDescriptions: Record<string, string> = {
