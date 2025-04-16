@@ -91,9 +91,9 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
   };
 
   return (
-    <Card id={id} className="shadow-md">
-      <CardContent className="pt-6">
-        <h2 className="mb-4 text-xl font-semibold">Resume Input</h2>
+    <div id={id} className="apple-card shadow-xl theme-transition">
+      <div className="p-6">
+        <h2 className="mb-4 text-xl font-semibold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Resume Input</h2>
         
         {/* File Upload */}
         <div className="mb-6">
@@ -101,15 +101,15 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
             Upload Resume Document
           </Label>
           <div 
-            className={`mt-1 flex justify-center rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 px-6 pb-6 pt-5 ${dragActive ? 'bg-primary/5 border-primary/50' : ''}`}
+            className={`mt-1 flex justify-center rounded-xl apple-glass p-6 transition-all duration-300 ${dragActive ? 'bg-primary/10 border-primary/50 shadow-lg' : ''}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
-            <div className="space-y-1 text-center">
-              <UploadCloud className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-              <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                <Label htmlFor="resume-upload" className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/90 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-800">
+            <div className="space-y-2 text-center">
+              <UploadCloud className="mx-auto h-12 w-12 text-primary/80" />
+              <div className="flex flex-col gap-1 sm:flex-row justify-center items-center text-sm text-gray-300">
+                <Label htmlFor="resume-upload" className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/90 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary/70 focus-within:ring-offset-2 dark:focus-within:ring-offset-black">
                   <span>Upload a file</span>
                   <input 
                     id="resume-upload" 
@@ -123,7 +123,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
                 </Label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-gray-500">
                 {uploadResumeMutation.isPending 
                   ? "Uploading..." 
                   : "PDF or DOCX up to 10MB"}
@@ -138,7 +138,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
             <Separator className="w-full" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white dark:bg-gray-800 px-2 text-gray-500 dark:text-gray-400">OR</span>
+            <span className="bg-black px-3 text-gray-400 theme-transition">OR</span>
           </div>
         </div>
         
@@ -151,25 +151,25 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
             id="resume-text" 
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
-            className="min-h-[400px] w-full" 
+            className="min-h-[400px] w-full border-white/10 backdrop-blur-sm bg-white/5 dark:bg-black/40 theme-transition focus:border-primary/70 resize-none rounded-xl" 
             placeholder="Paste your resume content here..."
           />
           
           <div className="mt-4 flex items-center">
-            <span className="text-xs text-gray-500 dark:text-gray-400">{getCharacterCount()}</span>
+            <span className="text-xs text-gray-400">{getCharacterCount()}</span>
             <div className="flex-grow"></div>
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm" 
               onClick={clearText}
-              className="h-8 px-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+              className="h-8 px-3 rounded-full bg-white/5 backdrop-blur-sm hover:bg-white/10 text-gray-300 hover:text-gray-100 dark:text-gray-300 dark:hover:text-gray-100 theme-transition"
             >
               <Trash2 className="mr-1 h-4 w-4" /> Clear
             </Button>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
