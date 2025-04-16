@@ -2,12 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force dark mode by default */
+:root {
+  color-scheme: dark;
+}
+
+/* Add dark class to html element with JavaScript instead of Tailwind @apply */
+html.dark {
+  color-scheme: dark;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-background text-foreground min-h-screen transition-colors duration-300;
   }
 }

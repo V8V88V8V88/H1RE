@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -8,6 +8,7 @@ import JobSelector from "@/components/job-selector";
 import ResultsPanel from "@/components/results-panel";
 import LoadingOverlay from "@/components/loading-overlay";
 import { Footer } from "@/components/footer";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { FileIcon, BarChart2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -63,6 +64,9 @@ function Home() {
               Resume Analyzer AI
             </h1>
           </motion.div>
+          
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </div>
       </motion.header>
 

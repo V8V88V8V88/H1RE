@@ -17,7 +17,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="rre-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="resume-analyzer-theme">
       <QueryClientProvider client={queryClient}>
         <Router />
         <Toaster />
