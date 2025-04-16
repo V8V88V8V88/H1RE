@@ -1,32 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export function ThemeToggle() {
-  // Check if the system preference is dark mode
-  const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   
-  // Set dark mode on first load
+  // Force dark mode on first load
   useEffect(() => {
-    // Set dark mode as default
-    if (!("theme" in localStorage)) {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-    } else if (localStorage.theme === "dark") {
-      document.documentElement.classList.add("dark");
+    // Check for existing theme in localStorage or default to dark
+    const savedTheme = localStorage.getItem("resume-analyzer-theme") as "light" | "dark" | null;
+    const newTheme = savedTheme || "dark";
+    
+    setTheme(newTheme);
+    updateTheme(newTheme);
+    
+    // Set dark mode by default if no theme is saved
+    if (!savedTheme) {
+      localStorage.setItem("resume-analyzer-theme", "dark");
     }
   }, []);
+  
+  // Function to update theme
+  const updateTheme = (newTheme: "light" | "dark") => {
+    const root = document.documentElement;
+    
+    if (newTheme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  };
 
   // Toggle theme function
   const toggleTheme = () => {
-    if (document.documentElement.classList.contains("dark")) {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme = "light";
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-    }
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    updateTheme(newTheme);
+    localStorage.setItem("resume-analyzer-theme", newTheme);
   };
 
   return (
@@ -36,14 +47,14 @@ export function ThemeToggle() {
       transition={{ delay: 0.3 }}
     >
       <Button
-        variant="ghost"
+        variant="outline"
         size="icon"
         onClick={toggleTheme}
-        className="rounded-full"
+        className="rounded-full bg-background/50 backdrop-blur-sm"
         aria-label="Toggle theme"
       >
-        <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-        <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Sun className={`h-5 w-5 transition-all ${theme === 'dark' ? 'scale-0 -rotate-90' : 'scale-100 rotate-0'}`} />
+        <Moon className={`absolute h-5 w-5 transition-all ${theme === 'dark' ? 'scale-100 rotate-0' : 'scale-0 rotate-90'}`} />
       </Button>
     </motion.div>
   );
