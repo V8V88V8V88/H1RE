@@ -62,23 +62,23 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
   return (
     <div className="flex flex-col space-y-6">
       {/* Target Position Information */}
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
-        <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Analysis Results</h2>
-        </div>
-        <div className="p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
-          <div className="flex items-center flex-1">
-            <Briefcase className="h-5 w-5 text-primary" />
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Target Position</p>
-              <p className="text-base font-semibold">{formatJobRole(jobRole)}</p>
+      <div className="apple-card shadow-xl theme-transition">
+        <div className="p-6">
+          <h2 className="mb-4 text-xl font-semibold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Analysis Results</h2>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+            <div className="flex items-center flex-1">
+              <Briefcase className="h-5 w-5 text-primary" />
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Target Position</p>
+                <p className="text-base font-semibold">{formatJobRole(jobRole)}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center flex-1">
-            <BarChart className="h-5 w-5 text-primary" />
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Experience Level</p>
-              <p className="text-base font-semibold">{formatExperienceLevel(experienceLevel)}</p>
+            <div className="flex items-center flex-1">
+              <BarChart className="h-5 w-5 text-primary" />
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Experience Level</p>
+                <p className="text-base font-semibold">{formatExperienceLevel(experienceLevel)}</p>
+              </div>
             </div>
           </div>
         </div>

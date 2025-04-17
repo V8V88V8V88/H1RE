@@ -109,7 +109,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
             <div className="space-y-2 text-center">
               <UploadCloud className="mx-auto h-12 w-12 text-primary/80" />
               <div className="flex flex-col gap-1 sm:flex-row justify-center items-center text-sm text-gray-300">
-                <Label htmlFor="resume-upload" className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/90 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary/70 focus-within:ring-offset-2 dark:focus-within:ring-offset-black">
+                <Label htmlFor="resume-upload" className="relative cursor-pointer rounded-md px-3 py-1.5 bg-gradient-to-r from-[#0078d4] to-[#0078d4] text-white font-medium hover:shadow-md hover:shadow-[#0078d4]/20 transition-all duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary/70 focus-within:ring-offset-2 dark:focus-within:ring-offset-black">
                   <span>Upload a file</span>
                   <input 
                     id="resume-upload" 
@@ -123,7 +123,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
                 </Label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-black-500">
                 {uploadResumeMutation.isPending 
                   ? "Uploading..." 
                   : "PDF or DOCX up to 10MB"}
@@ -138,7 +138,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
             <Separator className="w-full" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-black px-3 text-gray-400 theme-transition">OR</span>
+            <span className="bg-white dark:bg-black px-3 text-gray-400 theme-transition">OR</span>
           </div>
         </div>
         

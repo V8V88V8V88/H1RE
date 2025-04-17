@@ -56,7 +56,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
             >
               <SelectValue placeholder="Select a job role" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-white/10 bg-black/90 backdrop-blur-xl">
+            <SelectContent className="rounded-xl border-gray-200 dark:border-white/10 bg-white dark:bg-black/90 text-gray-900 dark:text-gray-100 backdrop-blur-xl">
               <SelectItem value="frontend-developer">Frontend Developer</SelectItem>
               <SelectItem value="backend-developer">Backend Developer</SelectItem>
               <SelectItem value="full-stack-developer">Full Stack Developer</SelectItem>
@@ -99,7 +99,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-white/10 bg-black/90 backdrop-blur-xl">
+            <SelectContent className="rounded-xl border-gray-200 dark:border-white/10 bg-white dark:bg-black/90 text-gray-900 dark:text-gray-100 backdrop-blur-xl">
               <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
               <SelectItem value="mid">Mid Level (3-5 years)</SelectItem>
               <SelectItem value="senior">Senior Level (6+ years)</SelectItem>
