@@ -37,7 +37,7 @@ Select from a range of job roles or create a custom role to get feedback specifi
 ### Frontend
 - React.js with TypeScript
 - Tailwind CSS for styling
-- ShadCN UI component library 
+- ShadCN UI component library (not anymore)
 - Framer Motion for animations
 - React Query for data fetching
 
@@ -53,13 +53,13 @@ Select from a range of job roles or create a custom role to get feedback specifi
 
 - Node.js (v18 or later)
 - NPM or Yarn
-- Google Gemini API key (or OpenAI API key as fallback)
+- Google Gemini API key
 
 ### Installation
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/v8v88v8v88/resume-analyzer-ai.git
+   git clone https://github.com/v8v88v8v88/h1re-ai.git
    cd resume-analyzer-ai
    ```
 
@@ -71,7 +71,6 @@ Select from a range of job roles or create a custom role to get feedback specifi
 3. Create a `.env` file in the root directory with the following content:
    ```
    GEMINI_API_KEY=your_gemini_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here (optional fallback)
    ```
 
 4. Start the development server
@@ -128,4 +127,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 - Built with ❤️ by v8v88v8v88.com
 - Powered by Google's Gemini AI technology
-- UI inspired by Apple's design language
