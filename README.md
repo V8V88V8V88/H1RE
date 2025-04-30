@@ -59,8 +59,8 @@ Select from a range of job roles or create a custom role to get feedback specifi
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/v8v88v8v88/h1re-ai.git
-   cd resume-analyzer-ai
+   git clone https://github.com/v8v88v8v88/h1re.git
+   cd h1re
    ```
 
 2. Install dependencies
