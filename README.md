@@ -1,6 +1,6 @@
 # Resume Analyzer AI
 
-![Resume Analyzer AI](h1re.png)
+![Resume Analyzer AI](hire.png)
 
 A cutting-edge resume evaluation platform powered by Google's Gemini 2.0-Flash AI. Get instant, comprehensive feedback on your resume to maximize your chances of landing your dream job.
 
