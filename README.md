@@ -126,4 +126,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Acknowledgments
 
 - Built with ❤️ by v8v88v8v88.com
-- Powered by Google's Gemini AI technology
+- Powered by Google's Gemini AI
