@@ -1,4 +1,4 @@
-# Resume Analyzer AI
+# H1RE: AI Resume Analyzer
 
 ![Resume Analyzer AI](hire.png)
 
