@@ -1,7 +1,6 @@
 import { users, resumeAnalyses, type User, type InsertUser, type ResumeAnalysis, type InsertResumeAnalysis } from "@shared/schema";
 
-// modify the interface with any CRUD methods
-// you might need
+
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -45,7 +44,11 @@ export class MemStorage implements IStorage {
   
   async createResumeAnalysis(insertAnalysis: InsertResumeAnalysis): Promise<ResumeAnalysis> {
     const id = this.analysisCurrentId++;
-    const analysis: ResumeAnalysis = { ...insertAnalysis, id };
+    const analysis: ResumeAnalysis = { 
+      ...insertAnalysis, 
+      id,
+      customJobRole: insertAnalysis.customJobRole ?? null 
+    };
     this.resumeAnalyses.set(id, analysis);
     return analysis;
   }

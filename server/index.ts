@@ -1,4 +1,3 @@
-// Load environment variables from .env files
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
