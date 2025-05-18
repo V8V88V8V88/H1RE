@@ -32,7 +32,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
       resumeText,
       jobRole: selectedJobRole,
       customJobRole: selectedJobRole === "custom" ? customJobRole : undefined,
-      experienceLevel: experienceLevel as "entry" | "mid" | "senior" | "executive",
+      experienceLevel: experienceLevel as "fresher" | "entry" | "mid" | "senior" | "executive",
     });
   };
 
@@ -66,6 +66,15 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
               <SelectItem value="ui-ux-designer">UI/UX Designer</SelectItem>
               <SelectItem value="project-manager">Project Manager</SelectItem>
               <SelectItem value="marketing-specialist">Marketing Specialist</SelectItem>
+              <SelectItem value="devops-engineer">DevOps Engineer</SelectItem>
+              <SelectItem value="qa-engineer">QA Engineer</SelectItem>
+              <SelectItem value="cloud-architect">Cloud Architect</SelectItem>
+              <SelectItem value="cybersecurity-analyst">Cybersecurity Analyst</SelectItem>
+              <SelectItem value="machine-learning-engineer">Machine Learning Engineer</SelectItem>
+              <SelectItem value="blockchain-developer">Blockchain Developer</SelectItem>
+              <SelectItem value="mobile-developer">Mobile Developer</SelectItem>
+              <SelectItem value="system-administrator">System Administrator</SelectItem>
+              <SelectItem value="technical-writer">Technical Writer</SelectItem>
               <SelectItem value="custom">Other (Custom)</SelectItem>
             </SelectContent>
           </Select>
@@ -100,6 +109,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-gray-200 dark:border-white/10 bg-white dark:bg-black/90 text-gray-900 dark:text-gray-100 backdrop-blur-xl">
+              <SelectItem value="fresher">Fresher (No experience)</SelectItem>
               <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
               <SelectItem value="mid">Mid Level (3-5 years)</SelectItem>
               <SelectItem value="senior">Senior Level (6+ years)</SelectItem>

@@ -50,10 +50,48 @@ const jobRoleDescriptions: Record<string, string> = {
     Marketing Specialist skills: Marketing strategy, digital marketing (SEO, SEM, email, social media), content creation, analytics tools, CRM systems, market research, A/B testing, campaign management, basic design skills, copywriting.
     Marketing Specialist responsibilities: Develop marketing campaigns, create content for various channels, analyze campaign performance, identify target audiences, optimize conversion funnels, conduct competitor analysis, support brand development.
     `,
+  "devops-engineer": `
+    DevOps Engineer skills: CI/CD pipelines, infrastructure as code (Terraform, CloudFormation), containerization (Docker, Kubernetes), cloud platforms (AWS, Azure, GCP), monitoring tools, version control, scripting (Bash, Python), networking, security best practices.
+    DevOps Engineer responsibilities: Automate deployment processes, maintain infrastructure, monitor system performance, implement security measures, optimize resource usage, troubleshoot system issues, collaborate with development teams to streamline operations.
+    `,
+  "qa-engineer": `
+    QA Engineer skills: Test planning, manual testing, automated testing frameworks (Selenium, Cypress, Jest), test case design, bug tracking systems, CI/CD familiarity, API testing, performance testing, security testing, regression testing.
+    QA Engineer responsibilities: Design and execute test plans, develop automated test scripts, identify and document bugs, validate fixes, ensure software quality before release, collaborate with developers for defect resolution, improve testing processes.
+    `,
+  "cloud-architect": `
+    Cloud Architect skills: Cloud platforms (AWS, Azure, GCP), distributed systems design, networking, security, serverless architecture, containerization, infrastructure as code, cost optimization, disaster recovery planning, performance optimization.
+    Cloud Architect responsibilities: Design cloud infrastructure solutions, develop migration strategies, establish best practices, ensure scalability and high availability, optimize cloud spending, implement security controls, lead cloud adoption initiatives.
+    `,
+  "cybersecurity-analyst": `
+    Cybersecurity Analyst skills: Network security, vulnerability assessment, penetration testing, security tools (IDS/IPS, SIEM), threat intelligence, incident response, security frameworks (ISO 27001, NIST), risk assessment, security policies, encryption.
+    Cybersecurity Analyst responsibilities: Monitor systems for security breaches, investigate incidents, implement security measures, conduct vulnerability assessments, develop security policies, perform risk analyses, stay current with security trends and threats.
+    `,
+  "machine-learning-engineer": `
+    Machine Learning Engineer skills: Python/C++/Java, ML frameworks (TensorFlow, PyTorch), data modeling, algorithm design, feature engineering, model training and evaluation, MLOps, distributed computing, data pipelines, mathematics and statistics.
+    Machine Learning Engineer responsibilities: Design and implement ML systems, develop algorithms, train models, optimize performance, deploy models to production, maintain ML infrastructure, collaborate with data scientists to operationalize models.
+    `,
+  "blockchain-developer": `
+    Blockchain Developer skills: Blockchain platforms (Ethereum, Solana, etc.), smart contract development, cryptography, distributed ledger technology, web3.js, Solidity/Rust, consensus algorithms, decentralized applications (DApps), security best practices.
+    Blockchain Developer responsibilities: Design and develop blockchain applications, create and audit smart contracts, implement security measures, optimize gas usage, integrate with existing systems, test blockchain solutions, stay current with blockchain technologies.
+    `,
+  "mobile-developer": `
+    Mobile Developer skills: Native development (Swift/Objective-C for iOS, Kotlin/Java for Android), cross-platform frameworks (React Native, Flutter), mobile UI/UX design, local data storage, RESTful APIs, performance optimization, app security, app store deployment.
+    Mobile Developer responsibilities: Design and develop mobile applications, implement user interfaces, integrate with backend services, optimize app performance, fix bugs and issues, ensure cross-device compatibility, deploy apps to app stores, maintain existing apps.
+    `,
+  "system-administrator": `
+    System Administrator skills: Operating systems (Linux, Windows Server), networking, security, backup and recovery, monitoring tools, automation, scripting, virtualization, user management, patch management, troubleshooting.
+    System Administrator responsibilities: Install and configure systems, manage user accounts, maintain system security, perform updates and patches, monitor system performance, troubleshoot issues, implement backup solutions, document system configurations.
+    `,
+  "technical-writer": `
+    Technical Writer skills: Technical documentation, content management systems, information architecture, audience analysis, style guides, API documentation, markup languages (Markdown, XML), editing, graphic design basics, project management.
+    Technical Writer responsibilities: Create clear technical documentation, develop user guides and manuals, document APIs and code, maintain documentation lifecycle, collaborate with engineers to understand technical concepts, ensure content accuracy and consistency.
+    `,
 };
 
 function getExperienceLevelDescription(level: string): string {
   switch (level) {
+    case "fresher":
+      return "Fresher (No experience): Focus on educational qualifications, relevant coursework, academic projects, internships, technical skills, and eagerness to learn.";
     case "entry":
       return "Entry Level (0-2 years of experience): Focus on educational background, internships, projects, and fundamental skills.";
     case "mid":

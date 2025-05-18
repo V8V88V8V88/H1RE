@@ -41,7 +41,7 @@ export const resumeAnalysisRequestSchema = z.object({
   resumeText: z.string().min(1, "Resume text is required"),
   jobRole: z.string().min(1, "Job role is required"),
   customJobRole: z.string().optional(),
-  experienceLevel: z.enum(["entry", "mid", "senior", "executive"]),
+  experienceLevel: z.enum(["fresher", "entry", "mid", "senior", "executive"]),
 });
 
 export const sectionStatus = z.object({
