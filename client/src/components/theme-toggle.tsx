@@ -21,7 +21,7 @@ export function ThemeToggle() {
         variant="outline"
         size="icon"
         onClick={toggleTheme}
-        className="rounded-full bg-background/50 backdrop-blur-sm theme-transition"
+        className="rounded-full bg-background/50 theme-transition"
         aria-label="Toggle theme"
       >
         <Sun className={`h-5 w-5 transition-all ${theme === 'dark' ? 'scale-0 -rotate-90' : 'scale-100 rotate-0'}`} />

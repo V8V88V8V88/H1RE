@@ -42,20 +42,20 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
   return (
     <div className="apple-card shadow-xl theme-transition">
       <div className="p-6">
-        <h2 className="mb-4 text-xl font-semibold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Job Role Selection</h2>
+        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Job Role Selection</h2>
         
         <div className="mb-4">
-          <Label htmlFor="job-role" className="mb-2 block">
+          <Label htmlFor="job-role" className="mb-2 block text-gray-900 dark:text-white">
             Target Position
           </Label>
           <Select value={selectedJobRole} onValueChange={handleRoleChange}>
             <SelectTrigger 
               id="job-role" 
-              className="apple-glass rounded-xl theme-transition border-white/10 focus:ring-primary/50 focus:border-primary/50"
+              className="rounded-xl border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0078d4]/20 focus:border-[#0078d4] focus:ring-offset-0"
             >
               <SelectValue placeholder="Select a job role" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-gray-200 dark:border-white/10 bg-white dark:bg-black/90 text-gray-900 dark:text-gray-100 backdrop-blur-xl">
+            <SelectContent className="rounded-xl border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white">
               <SelectItem value="frontend-developer">Frontend Developer</SelectItem>
               <SelectItem value="backend-developer">Backend Developer</SelectItem>
               <SelectItem value="full-stack-developer">Full Stack Developer</SelectItem>
@@ -82,7 +82,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
         {/* Custom Role Input */}
         {selectedJobRole === "custom" && (
           <div className="mb-4">
-            <Label htmlFor="custom-role" className="mb-2 block">
+            <Label htmlFor="custom-role" className="mb-2 block text-gray-900 dark:text-white">
               Specify Custom Role
             </Label>
             <Input 
@@ -90,24 +90,24 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
               value={customJobRole}
               onChange={(e) => setCustomJobRole(e.target.value)}
               placeholder="e.g. Blockchain Developer"
-              className="apple-glass rounded-xl theme-transition border-white/10 focus:ring-primary/50 focus:border-primary/50"
+              className="rounded-xl border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0078d4]/20 focus:border-[#0078d4]"
             />
           </div>
         )}
         
         {/* Experience Level */}
         <div className="mb-6">
-          <Label htmlFor="experience-level" className="mb-2 block">
+          <Label htmlFor="experience-level" className="mb-2 block text-gray-900 dark:text-white">
             Experience Level
           </Label>
           <Select value={experienceLevel} onValueChange={setExperienceLevel}>
             <SelectTrigger 
               id="experience-level" 
-              className="apple-glass rounded-xl theme-transition border-white/10 focus:ring-primary/50 focus:border-primary/50"
+              className="rounded-xl border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0078d4]/20 focus:border-[#0078d4] focus:ring-offset-0 transition-all"
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-gray-200 dark:border-white/10 bg-white dark:bg-black/90 text-gray-900 dark:text-gray-100 backdrop-blur-xl">
+            <SelectContent className="rounded-xl border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white">
               <SelectItem value="fresher">Fresher (No experience)</SelectItem>
               <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
               <SelectItem value="mid">Mid Level (3-5 years)</SelectItem>
@@ -121,7 +121,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
         <Button 
           onClick={handleAnalyzeClick}
           disabled={!canAnalyze || isAnalyzing}
-          className="w-full rounded-xl theme-transition bg-gradient-to-r from-[#0078d4] to-[#50b0ff] hover:shadow-lg hover:shadow-[#0078d4]/20 transition-all duration-300"
+          className="w-full rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Search className="mr-2 h-4 w-4" /> 
           {isAnalyzing ? "Analyzing..." : "Analyze Resume"}

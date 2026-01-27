@@ -28,7 +28,7 @@ const ScoreCard = ({
   const getLevelBadgeClass = () => {
     if (overallScore < 50) return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
     if (overallScore < 70) return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300";
-    if (overallScore < 90) return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+    if (overallScore < 90) return "bg-blue-100 text-blue-800 dark:bg-zinc-900 dark:text-white";
     return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
   };
 
@@ -40,8 +40,8 @@ const ScoreCard = ({
       <CardContent className="pt-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold">Resume Score</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Based on a comprehensive analysis</p>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Resume Score</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-300">Based on a comprehensive analysis</p>
             
             {/* Level Badge */}
             <div className="mt-3">
@@ -98,10 +98,10 @@ const ScoreCard = ({
         
         {/* Category Scores */}
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+          <div className="rounded-lg bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Grammar</p>
-              <span className="text-sm font-bold">{grammarScore}%</span>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">Grammar</p>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{grammarScore}%</span>
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
               <div 
@@ -110,10 +110,10 @@ const ScoreCard = ({
             </div>
           </div>
           
-          <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+          <div className="rounded-lg bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">ATS</p>
-              <span className="text-sm font-bold">{atsScore}%</span>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">ATS</p>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{atsScore}%</span>
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
               <div 
@@ -122,10 +122,10 @@ const ScoreCard = ({
             </div>
           </div>
           
-          <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+          <div className="rounded-lg bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Keyword</p>
-              <span className="text-sm font-bold">{keywordScore}%</span>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">Keyword</p>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{keywordScore}%</span>
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
               <div 
@@ -134,10 +134,10 @@ const ScoreCard = ({
             </div>
           </div>
           
-          <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+          <div className="rounded-lg bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Format</p>
-              <span className="text-sm font-bold">{formatScore}%</span>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">Format</p>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{formatScore}%</span>
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
               <div 
@@ -150,10 +150,10 @@ const ScoreCard = ({
         {/* Badges */}
         {earnedBadges.length > 0 && (
           <div className="mt-6">
-            <h3 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Achievements</h3>
+            <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Achievements</h3>
             <div className="flex flex-wrap gap-2">
               {earnedBadges.map((badge) => (
-                <span key={badge.id} className="flex items-center rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-1 text-xs font-medium">
+                <span key={badge.id} className="flex items-center rounded-full border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 px-3 py-1 text-xs font-medium text-gray-900 dark:text-white">
                   <i className={`${badge.icon} mr-1 text-primary`}></i>
                   <span>{badge.name}</span>
                 </span>

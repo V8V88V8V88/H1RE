@@ -87,25 +87,25 @@ html.light {
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
     --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 217.2 91.2% 59.8%;
   }
 
   * {
@@ -137,26 +137,25 @@ html.light {
   
   /* Glass elements */
   .apple-glass {
-    @apply backdrop-blur-xl border border-gray-300/20 bg-white/80 dark:border-white/10 dark:bg-black/60;
+    @apply border border-gray-300/20 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900;
     transition: all 300ms ease;
   }
   
   .apple-glass-light {
-    @apply backdrop-blur-xl bg-white/90 dark:bg-black/70 border border-gray-200/30 dark:border-white/10;
+    @apply bg-white/90 dark:bg-zinc-900 border border-gray-200/30 dark:border-zinc-800;
     transition: all 300ms ease;
   }
   
   /* Card styles with different colors for light/dark modes */
   .apple-card {
     @apply rounded-2xl shadow-lg border;
-    @apply bg-white/90 border-gray-200/50 dark:bg-black/80 dark:border-white/10;
-    @apply backdrop-blur-xl;
+    @apply bg-white/90 border-gray-200/50 dark:bg-zinc-900 dark:border-zinc-800;
     transition: all 300ms ease;
   }
   
   /* More contrast between elements in dark mode */
   .dark .contrast-card {
-    @apply bg-zinc-900/90;
+    @apply bg-zinc-900;
     transition: background-color 300ms ease;
   }
   

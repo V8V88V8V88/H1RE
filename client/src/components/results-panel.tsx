@@ -8,13 +8,54 @@ import ScoreCard from "@/components/score-card";
 import AnalysisCard from "@/components/analysis-card";
 import { generatePDFReport } from '../lib/pdf-generator';
 import { useState } from 'react';
-import { Briefcase, BarChart } from 'lucide-react';
+import { Briefcase, BarChart, User, FileText } from 'lucide-react';
 
 interface ResultsPanelProps {
   result: ResumeAnalysisResponse;
+  resumeText?: string;
+  onNewAnalysis?: () => void;
 }
 
-const ResultsPanel = ({ result }: ResultsPanelProps) => {
+function extractNameFromResume(resumeText: string): string {
+  if (!resumeText || resumeText.trim().length === 0) {
+    return "";
+  }
+  
+  const lines = resumeText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  if (lines.length === 0) return "";
+  
+  for (let i = 0; i < Math.min(5, lines.length); i++) {
+    const line = lines[i];
+    
+    if (line.includes('@') || line.includes('http') || line.includes('www.') || line.includes('+') || line.match(/^\d/)) {
+      continue;
+    }
+    
+    const namePatterns = [
+      /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2})/,
+      /^([A-Z][a-z]+\s+[A-Z][a-z]+)/,
+      /^([A-Z][a-z]+)/,
+    ];
+    
+    for (const pattern of namePatterns) {
+      const match = line.match(pattern);
+      if (match && match[1]) {
+        const name = match[1].trim();
+        if (name.length >= 3 && name.length <= 50 && 
+            !name.toLowerCase().includes('resume') &&
+            !name.toLowerCase().includes('cv') &&
+            !name.toLowerCase().includes('curriculum')) {
+          return name;
+        }
+      }
+    }
+  }
+  
+  return "";
+}
+
+const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const {
     overallScore,
@@ -31,12 +72,14 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
     customJobRole,
     experienceLevel
   } = result;
+  
+  const candidateName = extractNameFromResume(resumeText);
 
   // Helper function to get appropriate color class based on score
   const getScoreColorClass = (score: number) => {
     if (score < 50) return "text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30";
     if (score < 70) return "text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30";
-    if (score < 90) return "text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30";
+    if (score < 90) return "text-blue-600 dark:text-white bg-blue-100 dark:bg-zinc-900";
     return "text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30";
   };
 
@@ -68,20 +111,29 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
       {/* Target Position Information */}
       <div className="apple-card shadow-xl theme-transition">
         <div className="p-6">
-          <h2 className="mb-4 text-xl font-semibold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Analysis Results</h2>
+          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Analysis Results</h2>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+            {candidateName && (
+              <div className="flex items-center flex-1">
+                <User className="h-5 w-5 text-primary" />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Candidate Name</p>
+                  <p className="text-base font-semibold text-gray-900 dark:text-white">{candidateName}</p>
+                </div>
+              </div>
+            )}
             <div className="flex items-center flex-1">
               <Briefcase className="h-5 w-5 text-primary" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Target Position</p>
-                <p className="text-base font-semibold">{formatJobRole(jobRole)}</p>
+                <p className="text-base font-semibold text-gray-900 dark:text-white">{formatJobRole(jobRole)}</p>
               </div>
             </div>
             <div className="flex items-center flex-1">
               <BarChart className="h-5 w-5 text-primary" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Experience Level</p>
-                <p className="text-base font-semibold">{formatExperienceLevel(experienceLevel)}</p>
+                <p className="text-base font-semibold text-gray-900 dark:text-white">{formatExperienceLevel(experienceLevel)}</p>
               </div>
             </div>
           </div>
@@ -123,9 +175,9 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             ))}
           </ul>
           
-          <div className="mt-4 rounded-md bg-gray-50 dark:bg-gray-800 p-3">
-            <h3 className="mb-2 text-sm font-medium">Readability Score</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{grammarFeedback.readabilityComment}</p>
+          <div className="mt-4 rounded-md bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
+            <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Readability Score</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{grammarFeedback.readabilityComment}</p>
           </div>
         </AnalysisCard>
         
@@ -139,7 +191,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             <h3 className="mb-2 text-sm font-medium">Section Detection</h3>
             <div className="space-y-2">
               {atsFeedback.sections.map((section: SectionStatus, index: number) => (
-                <div key={index} className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-gray-800 px-3 py-2">
+                <div key={index} className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-zinc-900 px-3 py-2 border border-gray-200 dark:border-zinc-800">
                   <div className="flex items-center">
                     {section.found ? (
                       <svg className="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -154,9 +206,9 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             </div>
           </div>
           
-          <div className="mt-4 rounded-md bg-gray-50 dark:bg-gray-800 p-3">
-            <h3 className="mb-2 text-sm font-medium">ATS Recommendations</h3>
-            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-4 rounded-md bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
+            <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">ATS Recommendations</h3>
+            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
               {atsFeedback.recommendations.map((recommendation: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <svg className="h-4 w-4 mt-0.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -208,9 +260,9 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             </div>
           </div>
           
-          <div className="mt-4 rounded-md bg-gray-50 dark:bg-gray-800 p-3">
-            <h3 className="mb-2 text-sm font-medium">Keyword Recommendations</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{keywordFeedback.recommendation}</p>
+          <div className="mt-4 rounded-md bg-gray-50 dark:bg-zinc-900 p-3 border border-gray-200 dark:border-zinc-800">
+            <h3 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Keyword Recommendations</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{keywordFeedback.recommendation}</p>
           </div>
         </AnalysisCard>
         
@@ -219,14 +271,14 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           <div className="space-y-4">
             {/* Strengths */}
             {recommendations.filter((r: Recommendation) => r.type === "strength").length > 0 && (
-              <div className="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4">
+              <div className="rounded-md bg-blue-50 dark:bg-zinc-900 p-4 border border-blue-200 dark:border-zinc-800">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-blue-800 dark:text-blue-300">Overall Strengths</h3>
-                    <div className="mt-2 text-sm text-blue-700 dark:text-blue-400">
+                    <h3 className="text-sm font-medium text-blue-800 dark:text-white">Overall Strengths</h3>
+                    <div className="mt-2 text-sm text-blue-700 dark:text-gray-300">
                       {recommendations.filter((r: Recommendation) => r.type === "strength").map((rec: Recommendation, index: number) => (
                         <p key={index} className="mt-1">{rec.text}</p>
                       ))}
@@ -238,14 +290,14 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             
             {/* Areas for Improvement */}
             {recommendations.filter((r: Recommendation) => r.type === "improvement").length > 0 && (
-              <div className="rounded-md bg-yellow-50 dark:bg-yellow-900/20 p-4">
+              <div className="rounded-md bg-yellow-50 dark:bg-zinc-900 p-4 border border-yellow-200 dark:border-zinc-800">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg className="h-5 w-5 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-300">Areas for Improvement</h3>
-                    <ul className="mt-2 space-y-1 text-sm text-yellow-700 dark:text-yellow-400">
+                    <h3 className="text-sm font-medium text-yellow-800 dark:text-white">Areas for Improvement</h3>
+                    <ul className="mt-2 space-y-1 text-sm text-yellow-700 dark:text-gray-300">
                       {recommendations.filter((r: Recommendation) => r.type === "improvement").map((rec: Recommendation, index: number) => (
                         <li key={index}>{rec.text}</li>
                       ))}
@@ -257,14 +309,14 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             
             {/* Next Steps */}
             {recommendations.filter((r: Recommendation) => r.type === "next-step").length > 0 && (
-              <div className="rounded-md bg-green-50 dark:bg-green-900/20 p-4">
+              <div className="rounded-md bg-green-50 dark:bg-zinc-900 p-4 border border-green-200 dark:border-zinc-800">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg className="h-5 w-5 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-green-800 dark:text-green-300">Next Steps</h3>
-                    <div className="mt-2 text-sm text-green-700 dark:text-green-400">
+                    <h3 className="text-sm font-medium text-green-800 dark:text-white">Next Steps</h3>
+                    <div className="mt-2 text-sm text-green-700 dark:text-gray-300">
                       {recommendations.filter((r: Recommendation) => r.type === "next-step").map((rec: Recommendation, index: number) => (
                         <p key={index} className="mt-1">{rec.text}</p>
                       ))}
@@ -279,7 +331,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
               onClick={() => {
                 setIsGeneratingPDF(true);
                 try {
-                  generatePDFReport(result);
+                  generatePDFReport(result, resumeText);
                 } finally {
                   setIsGeneratingPDF(false);
                 }
@@ -304,6 +356,19 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           </div>
         </AnalysisCard>
       </div>
+      
+      {/* Next Resume Analyze Button */}
+      {onNewAnalysis && (
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={onNewAnalysis}
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white px-6 py-3 font-medium shadow-sm hover:shadow-md transition-all duration-200"
+          >
+            <FileText className="h-5 w-5" />
+            Next Resume Analyze
+          </button>
+        </div>
+      )}
     </div>
   );
 };

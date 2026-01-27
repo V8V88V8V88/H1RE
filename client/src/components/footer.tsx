@@ -12,7 +12,7 @@ import {
 export function Footer() {
   return (
     <motion.footer 
-      className="mt-16 py-8 border-t border-white/5 backdrop-blur-xl theme-transition"
+      className="mt-16 py-8 border-t border-zinc-800 theme-transition"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
@@ -38,15 +38,15 @@ export function Footer() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="rounded-full bg-black/40 backdrop-blur-sm border-white/10 hover:border-white/20 hover:bg-black/60 theme-transition"
+                className="rounded-full bg-gray-900 dark:bg-zinc-900 border-gray-700 dark:border-zinc-800 hover:border-gray-600 dark:hover:border-zinc-700 hover:bg-gray-800 dark:hover:bg-zinc-800 text-white dark:text-white theme-transition"
               >
                 About this project
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] rounded-xl border-white/10 backdrop-blur-xl bg-black/80 shadow-xl theme-transition">
+            <DialogContent className="sm:max-w-[600px] rounded-xl border-zinc-800 bg-zinc-900 shadow-xl theme-transition">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent pb-1">
-                  Resume Analyzer AI
+                <DialogTitle className="text-2xl font-bold text-white pb-1">
+                  H1RE
                 </DialogTitle>
                 <DialogDescription className="text-lg text-gray-300">
                   An intelligent resume evaluation tool
@@ -55,8 +55,8 @@ export function Footer() {
               
               <div className="space-y-4 my-6 text-sm text-gray-300">
                 <p>
-                  Resume Analyzer AI is a cutting-edge web application that helps job seekers optimize their resumes for specific job roles and experience levels. 
-                  Using the power of Google's Gemini AI, it provides comprehensive analysis and actionable feedback in several key areas:
+                  H1RE is a cutting-edge web application that helps job seekers optimize their resumes for specific job roles and experience levels. 
+                  It provides comprehensive analysis and actionable feedback in several key areas:
                 </p>
                 
                 <div className="space-y-3 pl-4">
@@ -83,8 +83,7 @@ export function Footer() {
                 </p>
 
                 <p className="text-xs text-gray-500 pt-2">
-                  Built with React, TypeScript, Tailwind CSS, and Shadcn/UI components. 
-                  Powered by Google Gemini 2.0-Flash AI.
+                  Built with React, TypeScript, Tailwind CSS, and Shadcn/UI components.
                 </p>
               </div>
             </DialogContent>

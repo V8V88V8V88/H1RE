@@ -2,15 +2,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
 
 // Initialize the Gemini API
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY?.trim();
 console.log("GEMINI_API_KEY status:", apiKey ? "Present (value starts with: " + apiKey.substring(0, 5) + "...)" : "Missing");
 if (!apiKey) {
   console.error("GEMINI_API_KEY is missing in .env file");
+  throw new Error("GEMINI_API_KEY is required. Please set it in your .env file.");
 }
-const genAI = new GoogleGenerativeAI(apiKey || "");
-// Using gemini-2.0-flash model for improved speed and performance
-// Optimal for our use case of analyzing text content with fast responses
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // Job role descriptions
 const jobRoleDescriptions: Record<string, string> = {
@@ -88,6 +87,53 @@ const jobRoleDescriptions: Record<string, string> = {
     `,
 };
 
+function fixJsonErrors(json: string): string {
+  let fixed = json;
+  
+  fixed = fixed.replace(/,\s*]/g, "]");
+  fixed = fixed.replace(/,\s*}/g, "}");
+  fixed = fixed.replace(/([^\\])"/g, '$1"');
+  fixed = fixed.replace(/\\n/g, " ");
+  fixed = fixed.replace(/\\t/g, " ");
+  
+  const lines = fixed.split("\n");
+  const cleanedLines: string[] = [];
+  let inString = false;
+  let stringChar = '';
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    let cleanedLine = '';
+    
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      const prevChar = j > 0 ? line[j - 1] : '';
+      
+      if ((char === '"' || char === "'") && prevChar !== '\\') {
+        if (!inString) {
+          inString = true;
+          stringChar = char;
+        } else if (char === stringChar) {
+          inString = false;
+          stringChar = '';
+        }
+      }
+      
+      if (!inString && char === '\n') {
+        continue;
+      }
+      
+      cleanedLine += char;
+    }
+    
+    if (cleanedLine.trim()) {
+      cleanedLines.push(cleanedLine);
+    }
+  }
+  
+  return cleanedLines.join('\n');
+}
+
 function getExperienceLevelDescription(level: string): string {
   switch (level) {
     case "fresher":
@@ -118,89 +164,109 @@ export async function analyzeResume(request: ResumeAnalysisRequest): Promise<Res
 
   const levelDescription = getExperienceLevelDescription(experienceLevel);
 
-  // Prompt for Gemini
   const prompt = `
-  Analyze the following resume for a ${jobRole === "custom" ? customJobRole : jobRole.replace(/-/g, " ")} position (${levelDescription}).
-  
-  RESUME:
-  ${resumeText}
-  
-  JOB REQUIREMENTS:
-  ${roleDescription}
-  
-  Perform a detailed analysis and provide a JSON response with the following structure:
-  {
-    "overallScore": (number between 1-100),
-    "grammarScore": (number between 1-100),
-    "atsScore": (number between 1-100),
-    "keywordScore": (number between 1-100),
-    "formatScore": (number between 1-100),
-    "level": (string - either "Beginner", "Intermediate", "Pro", or "Expert" based on overall score),
-    "earnedBadges": [
+Analyze the following resume for a ${jobRole === "custom" ? customJobRole : jobRole.replace(/-/g, " ")} position (${levelDescription}).
+
+RESUME:
+${resumeText}
+
+JOB REQUIREMENTS:
+${roleDescription}
+
+Perform a detailed analysis and provide ONLY valid JSON with the following structure. Do not include any markdown formatting, code blocks, or explanatory text - only the raw JSON object:
+{
+  "overallScore": <number between 1-100>,
+  "grammarScore": <number between 1-100>,
+  "atsScore": <number between 1-100>,
+  "keywordScore": <number between 1-100>,
+  "formatScore": <number between 1-100>,
+  "level": "<Beginner|Intermediate|Pro|Expert>",
+  "earnedBadges": [
+    {
+      "id": <number>,
+      "name": "<badge name>",
+      "icon": "<remix icon name>"
+    }
+  ],
+  "grammarFeedback": {
+    "issues": [
       {
-        "id": (number),
-        "name": (string name of the badge, like "Grammar Guru" or "Keyword King"),
-        "icon": (string - recommend an icon name from Remix Icon, e.g. "ri-quill-pen-line")
+        "type": "<positive|warning|error>",
+        "text": "<description>"
       }
     ],
-    "grammarFeedback": {
-      "issues": [
-        {
-          "type": (string - either "positive", "warning", or "error"),
-          "text": (string describing the issue or positive aspect)
-        }
-      ],
-      "readabilityComment": (string with overall readability assessment)
-    },
-    "atsFeedback": {
-      "sections": [
-        {
-          "name": (string name of section, e.g. "Contact Information", "Work Experience"),
-          "found": (boolean indicating if section was found)
-        }
-      ],
-      "recommendations": [
-        (string with ATS recommendation)
-      ]
-    },
-    "keywordFeedback": {
-      "foundKeywords": [
-        (string keyword found in resume)
-      ],
-      "missingKeywords": [
-        (string important keyword missing from resume)
-      ],
-      "recommendation": (string with keyword recommendation)
-    },
-    "recommendations": [
+    "readabilityComment": "<comment>"
+  },
+  "atsFeedback": {
+    "sections": [
       {
-        "text": (string with recommendation),
-        "type": (string - either "strength", "improvement", or "next-step")
+        "name": "<section name>",
+        "found": <true|false>
       }
-    ]
-  }
-  
-  Be honest but helpful in your assessment. The scores should reflect the resume's quality for the specific job role.
+    ],
+    "recommendations": ["<recommendation>"]
+  },
+  "keywordFeedback": {
+    "foundKeywords": ["<keyword>"],
+    "missingKeywords": ["<keyword>"],
+    "recommendation": "<recommendation>"
+  },
+  "recommendations": [
+    {
+      "text": "<recommendation>",
+      "type": "<strength|improvement|next-step>"
+    }
+  ]
+}
+
+Be honest but helpful. The scores should reflect the resume's quality for the specific job role. Return ONLY the JSON object, nothing else.
   `;
 
   try {
-    // Generate content with Gemini
-    const systemMessage = "You are an expert resume analyst with deep knowledge of recruitment, applicant tracking systems, and industry-specific requirements.";
-    const result = await model.generateContent([systemMessage, prompt]);
+    const systemMessage = "You are an expert resume analyst with deep knowledge of recruitment, applicant tracking systems, and industry-specific requirements. Always respond with valid JSON only, no markdown, no code blocks, no explanations.";
+    
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: `${systemMessage}\n\n${prompt}` }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    });
+    
     const response = result.response;
     const text = response.text();
     
-    // Parse the JSON response
-    // First find the JSON part in the response (in case Gemini adds extra text)
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error("Failed to extract JSON from Gemini response");
+    let jsonResponse = text.trim();
+    
+    if (jsonResponse.startsWith("```json")) {
+      jsonResponse = jsonResponse.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+    } else if (jsonResponse.startsWith("```")) {
+      jsonResponse = jsonResponse.replace(/^```\s*/, "").replace(/\s*```$/, "");
     }
     
-    const jsonResponse = jsonMatch[0];
-    const parsedResponse = JSON.parse(jsonResponse) as ResumeAnalysisResponse;
+    jsonResponse = jsonResponse.trim();
     
-    // Add the job role and experience level to the response
+    if (!jsonResponse.startsWith("{")) {
+      const jsonMatch = jsonResponse.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        jsonResponse = jsonMatch[0];
+      }
+    }
+    
+    let parsedResponse: ResumeAnalysisResponse;
+    try {
+      parsedResponse = JSON.parse(jsonResponse) as ResumeAnalysisResponse;
+    } catch (parseError: any) {
+      console.error("JSON parse error at position:", parseError.message);
+      console.error("JSON response (first 500 chars):", jsonResponse.substring(0, 500));
+      
+      const fixedJson = fixJsonErrors(jsonResponse);
+      try {
+        parsedResponse = JSON.parse(fixedJson) as ResumeAnalysisResponse;
+      } catch (retryError) {
+        throw new Error(`Failed to parse JSON response: ${parseError.message}. Response preview: ${jsonResponse.substring(0, 200)}...`);
+      }
+    }
+    
     const enrichedResponse: ResumeAnalysisResponse = {
       ...parsedResponse,
       jobRole,
@@ -212,9 +278,15 @@ export async function analyzeResume(request: ResumeAnalysisRequest): Promise<Res
   } catch (error: any) {
     console.error("Error analyzing resume with Gemini:", error.message);
     
-    // Provide more specific error messages for API key issues
     if (error.message.includes("403 Forbidden") || error.message.includes("unregistered callers")) {
       throw new Error("Invalid or unregistered Gemini API key. Please make sure your API key is valid and properly set up in the Google AI Studio.");
+    }
+    
+    if (error.message.includes("429") || error.message.includes("quota") || error.message.includes("limit: 0")) {
+      if (error.message.includes("limit: 0")) {
+        throw new Error("Gemini API is not enabled or API key is invalid. Please check: 1) API key is correct, 2) Generative AI API is enabled in Google Cloud Console, 3) API key has proper permissions.");
+      }
+      throw new Error(`Quota exceeded: ${error.message}`);
     }
     
     throw new Error(`Failed to analyze resume: ${error.message}`);
