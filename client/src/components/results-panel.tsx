@@ -1,7 +1,11 @@
-import { ResumeAnalysisResponse } from "@shared/schema";
+import { ResumeAnalysisResponse, grammarIssue, sectionStatus, recommendation } from "@shared/schema";
+import { z } from "zod";
+
+type GrammarIssue = z.infer<typeof grammarIssue>;
+type SectionStatus = z.infer<typeof sectionStatus>;
+type Recommendation = z.infer<typeof recommendation>;
 import ScoreCard from "@/components/score-card";
 import AnalysisCard from "@/components/analysis-card";
-import { cn } from "@/lib/utils";
 import { generatePDFReport } from '../lib/pdf-generator';
 import { useState } from 'react';
 import { Briefcase, BarChart } from 'lucide-react';
@@ -103,7 +107,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           scoreColorClass={getScoreColorClass(grammarScore)}
         >
           <ul className="space-y-3">
-            {grammarFeedback.issues.map((issue, index) => (
+            {grammarFeedback.issues.map((issue: GrammarIssue, index: number) => (
               <li key={index} className="flex items-start">
                 {issue.type === "positive" && (
                   <svg className="h-5 w-5 mt-0.5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -134,7 +138,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           <div className="mb-4">
             <h3 className="mb-2 text-sm font-medium">Section Detection</h3>
             <div className="space-y-2">
-              {atsFeedback.sections.map((section, index) => (
+              {atsFeedback.sections.map((section: SectionStatus, index: number) => (
                 <div key={index} className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-gray-800 px-3 py-2">
                   <div className="flex items-center">
                     {section.found ? (
@@ -153,7 +157,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           <div className="mt-4 rounded-md bg-gray-50 dark:bg-gray-800 p-3">
             <h3 className="mb-2 text-sm font-medium">ATS Recommendations</h3>
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              {atsFeedback.recommendations.map((recommendation, index) => (
+              {atsFeedback.recommendations.map((recommendation: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <svg className="h-4 w-4 mt-0.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                   <span className="ml-1">{recommendation}</span>
@@ -173,7 +177,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           <div className="mb-4">
             <h3 className="mb-2 text-sm font-medium">Found Keywords</h3>
             <div className="flex flex-wrap gap-2">
-              {keywordFeedback.foundKeywords.map((keyword, index) => (
+              {keywordFeedback.foundKeywords.map((keyword: string, index: number) => (
                 <span 
                   key={index}
                   className="rounded-full bg-green-100 dark:bg-green-900/30 px-3 py-1 text-xs font-medium text-green-800 dark:text-green-300"
@@ -190,7 +194,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
           <div className="mb-4">
             <h3 className="mb-2 text-sm font-medium">Missing Keywords</h3>
             <div className="flex flex-wrap gap-2">
-              {keywordFeedback.missingKeywords.map((keyword, index) => (
+              {keywordFeedback.missingKeywords.map((keyword: string, index: number) => (
                 <span 
                   key={index}
                   className="rounded-full bg-red-100 dark:bg-red-900/30 px-3 py-1 text-xs font-medium text-red-800 dark:text-red-300"
@@ -214,7 +218,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
         <AnalysisCard title="Final Recommendations">
           <div className="space-y-4">
             {/* Strengths */}
-            {recommendations.filter(r => r.type === "strength").length > 0 && (
+            {recommendations.filter((r: Recommendation) => r.type === "strength").length > 0 && (
               <div className="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
@@ -223,7 +227,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-blue-800 dark:text-blue-300">Overall Strengths</h3>
                     <div className="mt-2 text-sm text-blue-700 dark:text-blue-400">
-                      {recommendations.filter(r => r.type === "strength").map((rec, index) => (
+                      {recommendations.filter((r: Recommendation) => r.type === "strength").map((rec: Recommendation, index: number) => (
                         <p key={index} className="mt-1">{rec.text}</p>
                       ))}
                     </div>
@@ -233,7 +237,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             )}
             
             {/* Areas for Improvement */}
-            {recommendations.filter(r => r.type === "improvement").length > 0 && (
+            {recommendations.filter((r: Recommendation) => r.type === "improvement").length > 0 && (
               <div className="rounded-md bg-yellow-50 dark:bg-yellow-900/20 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
@@ -242,7 +246,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-300">Areas for Improvement</h3>
                     <ul className="mt-2 space-y-1 text-sm text-yellow-700 dark:text-yellow-400">
-                      {recommendations.filter(r => r.type === "improvement").map((rec, index) => (
+                      {recommendations.filter((r: Recommendation) => r.type === "improvement").map((rec: Recommendation, index: number) => (
                         <li key={index}>{rec.text}</li>
                       ))}
                     </ul>
@@ -252,7 +256,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
             )}
             
             {/* Next Steps */}
-            {recommendations.filter(r => r.type === "next-step").length > 0 && (
+            {recommendations.filter((r: Recommendation) => r.type === "next-step").length > 0 && (
               <div className="rounded-md bg-green-50 dark:bg-green-900/20 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
@@ -261,7 +265,7 @@ const ResultsPanel = ({ result }: ResultsPanelProps) => {
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-green-800 dark:text-green-300">Next Steps</h3>
                     <div className="mt-2 text-sm text-green-700 dark:text-green-400">
-                      {recommendations.filter(r => r.type === "next-step").map((rec, index) => (
+                      {recommendations.filter((r: Recommendation) => r.type === "next-step").map((rec: Recommendation, index: number) => (
                         <p key={index} className="mt-1">{rec.text}</p>
                       ))}
                     </div>

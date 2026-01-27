@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { badge } from "@shared/schema";
-import { calculateCircumference } from "@/lib/utils";
 
 interface ScoreCardProps {
   overallScore: number;

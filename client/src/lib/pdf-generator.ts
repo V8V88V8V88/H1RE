@@ -1,13 +1,33 @@
 import jsPDF from 'jspdf';
 import type { ResumeAnalysisResponse } from '@shared/schema';
 
+interface Badge {
+  id: number;
+  name: string;
+  icon: string;
+}
+
+interface GrammarIssue {
+  type: "positive" | "warning" | "error";
+  text: string;
+}
+
+interface Section {
+  name: string;
+  found: boolean;
+}
+
+interface Recommendation {
+  text: string;
+  type: "strength" | "improvement" | "next-step";
+}
+
 export function generatePDFReport(result: ResumeAnalysisResponse): void {
   const {
     overallScore,
     grammarScore,
     atsScore,
     keywordScore,
-    formatScore,
     earnedBadges,
     grammarFeedback,
     atsFeedback,
@@ -62,15 +82,6 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
     doc.text(text, x, y, { ...defaultOptions, ...options });
   };
 
-  // Using bullet points instead of emojis for better compatibility
-  const bulletTypes = {
-    positive: '✓',
-    warning: '!',
-    error: '✗',
-    strength: '•',
-    improvement: '•',
-    nextStep: '•'
-  };
 
   // Title with styling - reduced font size
   doc.setTextColor(0, 120, 212); // Azure blue
@@ -158,7 +169,7 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
     doc.setFontSize(10); // Was 12
     doc.setTextColor(60, 60, 60);
     
-    earnedBadges.forEach((badge, index) => {
+    earnedBadges.forEach((badge: Badge, index: number) => {
       addText(`• ${badge.name}`, 25, yPosition + 7 + (index * 7));
     });
     
@@ -179,7 +190,7 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
   
   yPosition += 35;
   
-  grammarFeedback.issues.forEach((issue) => {
+  grammarFeedback.issues.forEach((issue: GrammarIssue) => {
     let bulletPoint;
     let textColor;
     
@@ -233,7 +244,7 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
   
   yPosition += 6; // Was 8
   
-  atsFeedback.sections.forEach((section) => {
+  atsFeedback.sections.forEach((section: Section) => {
     if (section.found) {
       doc.setTextColor(40, 167, 69); // Green
       addText('✓', 20, yPosition);
@@ -263,7 +274,7 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
   doc.setFontSize(10); // Was 12
   doc.setTextColor(60, 60, 60);
   
-  atsFeedback.recommendations.forEach((recommendation) => {
+  atsFeedback.recommendations.forEach((recommendation: string) => {
     // Check if we need a new page
     if (yPosition > 270) {
       doc.addPage();
@@ -367,7 +378,7 @@ export function generatePDFReport(result: ResumeAnalysisResponse): void {
   doc.setFontSize(10); // Was 12
   doc.setTextColor(60, 60, 60);
   
-  recommendations.forEach((recommendation) => {
+  recommendations.forEach((recommendation: Recommendation) => {
     // Check if we need a new page
     if (yPosition > 270) {
       doc.addPage();

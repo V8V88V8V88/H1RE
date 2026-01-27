@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -10,7 +10,7 @@ import LoadingOverlay from "@/components/loading-overlay";
 import { Footer } from "@/components/footer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SampleResume } from "@/components/sample-resume";
-import { FileIcon, BarChart2, Sparkles, CheckCircle2 } from "lucide-react";
+import { FileIcon, BarChart2, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Home() {
