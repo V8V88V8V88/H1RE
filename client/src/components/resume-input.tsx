@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -22,7 +24,7 @@ const ResumeInput = ({ id, resumeText, setResumeText }: ResumeInputProps) => {
       const formData = new FormData();
       formData.append("resume", file);
 
-      const response = await fetch("/api/upload-resume", {
+      const response = await fetch(`${API_BASE_URL}/api/upload-resume`, {
         method: "POST",
         body: formData,
         credentials: "include",
