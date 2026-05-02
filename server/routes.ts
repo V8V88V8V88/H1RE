@@ -30,13 +30,13 @@ const upload = multer({
   }
 });
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export function configureRoutes(app: Express) {
   // API route to analyze resume
   app.post('/api/analyze-resume', async (req, res) => {
     try {
       const validatedData = resumeAnalysisRequestSchema.parse(req.body);
       const analysisResult = await analyzeResume(validatedData);
-      
+
       // Store the analysis result
       const timestamp = new Date().toISOString();
       await storage.createResumeAnalysis({
@@ -56,12 +56,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         experienceLevel: analysisResult.experienceLevel,
         createdAt: timestamp,
       });
-      
+
       res.json(analysisResult);
     } catch (error: any) {
       console.error("Error analyzing resume:", error);
-      res.status(400).json({ 
-        message: error.message || "Invalid request data" 
+      res.status(400).json({
+        message: error.message || "Invalid request data",
       });
     }
   });
@@ -74,7 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       let text = '';
-      
+
       // Parse the file based on its mimetype
       if (req.file.mimetype === "application/pdf") {
         // Parse PDF with pdf-parse v2 API
@@ -85,7 +85,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         // Parse DOCX
         const result = await mammoth.extractRawText({
-          buffer: req.file.buffer
+          buffer: req.file.buffer,
         });
         text = result.value;
       }
@@ -94,12 +94,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ text });
     } catch (error: any) {
       console.error("Error parsing resume file:", error);
-      res.status(400).json({ 
-        message: error.message || "Failed to parse resume file" 
+      res.status(400).json({
+        message: error.message || "Failed to parse resume file",
       });
     }
   });
+}
 
+export async function registerRoutes(app: Express): Promise<Server> {
+  configureRoutes(app);
   const httpServer = createServer(app);
   return httpServer;
 }
