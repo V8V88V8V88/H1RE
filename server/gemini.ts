@@ -3,7 +3,6 @@ import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
 
 // Initialize the Gemini API
 const apiKey = process.env.GEMINI_API_KEY?.trim();
-console.log("GEMINI_API_KEY status:", apiKey ? "Present (value starts with: " + apiKey.substring(0, 5) + "...)" : "Missing");
 if (!apiKey) {
   console.error("GEMINI_API_KEY is missing in .env file");
   throw new Error("GEMINI_API_KEY is required. Please set it in your .env file.");
