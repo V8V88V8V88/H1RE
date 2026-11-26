@@ -1,16 +1,7 @@
 import express from "express";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
-import { nanoid } from "nanoid";
-import { configureRoutes } from "./routes";
-import { createLogger } from "vite";
+import { configureRoutes } from "./routes.js";
 
-const viteLogger = createLogger();
 
-// Get the directory name of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export function createApp() {
   const app = express();

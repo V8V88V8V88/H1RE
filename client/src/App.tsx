@@ -54,7 +54,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="resume-analyzer-theme">
+    <ThemeProvider defaultTheme="system" storageKey="h1re-theme">
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <Router />

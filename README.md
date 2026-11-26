@@ -1,129 +1,34 @@
-# H1RE: AI Resume Analyzer
+<p align="center">
+  <img src="hire.png" alt="H1RE logo" width="96" />
+</p>
 
-![Resume Analyzer AI](hire.png)
+<h1 align="center">H1RE</h1>
 
-A cutting-edge resume evaluation platform powered by Google's Gemini 2.0-Flash AI. Get instant, comprehensive feedback on your resume to maximize your chances of landing your dream job.
+<p align="center">AI resume analyzer. Upload your resume, pick the job you're aiming for, get scores and concrete fixes.</p>
 
-## Features
+## What it does
 
-### 📊 Comprehensive Analysis Modules
+- Reads a **PDF or DOCX** resume (or pasted text).
+- Scores it for **grammar**, **ATS compatibility**, **keyword match** and **format** against a chosen job role and experience level.
+- Lists what to fix, and lets you download the report as a PDF.
 
-- **Grammar & Readability**: Catches spelling and grammar errors while evaluating overall readability
-- **ATS Compatibility**: Checks if your resume will pass Applicant Tracking Systems used by employers
-- **Keyword Analysis**: Identifies missing keywords important for your target job role
-- **Smart Recommendations**: Provides personalized suggestions to improve your resume
+Analysis is done by Google Gemini on the server; nothing is stored.
 
-### 🎯 Targeted Job Analysis
+## Run locally
 
-Select from a range of job roles or create a custom role to get feedback specific to your target position. The AI adjusts its analysis based on:
-- Your chosen job role (Frontend Developer, Data Scientist, Product Manager, etc.)
-- Experience level (Entry, Mid, Senior, Executive)
+Needs [Bun](https://bun.sh) and a [Gemini API key](https://aistudio.google.com/apikey).
 
-### 💻 Modern, Responsive UI
+```bash
+bun install
+echo "GEMINI_API_KEY=your_key" > .env
+bun run dev          # http://localhost:5000
+```
 
-- Sleek Apple-inspired design with glass-effect components
-- Dark/light mode support
-- Fully responsive layouts for all devices
-- Azure blue accents and elegant animations
+## Stack
 
-### 🧠 AI-Powered Intelligence
+React + Vite + Tailwind (`client/`), Express API (`server/`), deployed on Vercel with the API as a serverless function (`api/index.ts`).
 
-- Leverages Google's Gemini 2.0-Flash model
-- Provides scores across multiple categories
-- Suggests specific improvements with clear action items
-
-## Technologies Used
-
-### Frontend
-- React.js with TypeScript
-- Tailwind CSS for styling
-- ShadCN UI component library (not anymore)
-- Framer Motion for animations
-- React Query for data fetching
-
-### Backend
-- Node.js with Express
-- File parsing (PDF, DOCX support)
-- Google Gemini API integration
-- In-memory storage for demos
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18 or later)
-- NPM or Yarn
-- Google Gemini API key
-
-### Installation
-
-1. Clone the repository
-   ```bash
-   git clone https://github.com/v8v88v8v88/h1re.git
-   cd h1re
-   ```
-
-2. Install dependencies
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file in the root directory with the following content:
-   ```
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-
-4. Start the development server
-   ```bash
-   npm run dev
-   ```
-
-5. Open your browser and navigate to `http://localhost:5000`
-
-## Usage Guide
-
-1. **Upload Your Resume**
-   - Drag and drop a PDF or DOCX file
-   - Or paste your resume text directly
-
-2. **Select Job Details**
-   - Choose a target job role from the dropdown
-   - Select your experience level
-   - For custom roles, enter the specific job title
-
-3. **Analyze Your Resume**
-   - Click "Analyze Resume" to process your document
-   - View comprehensive results organized by category
-
-4. **Implement Suggestions**
-   - Review AI recommendations
-   - Make changes to your resume based on feedback
-   - Re-analyze to see improved scores
-
-## API Documentation
-
-The application exposes the following API endpoints:
-
-- `POST /api/upload-resume`: Upload and parse a resume file
-  - Accepts multipart/form-data with a file field
-  - Returns parsed text content
-
-- `POST /api/analyze-resume`: Analyze resume text
-  - Request body: `{ resumeText, jobRole, customJobRole?, experienceLevel }`
-  - Returns comprehensive analysis results
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-
-## Acknowledgments
-
-- Built with ❤️ by v8v88v8v88.com
-- Powered by Google's Gemini AI
+| Endpoint | Body | Returns |
+|---|---|---|
+| `POST /api/upload-resume` | multipart `resume` file | `{ text }` |
+| `POST /api/analyze-resume` | `{ resumeText, jobRole, customJobRole?, experienceLevel }` | scores + feedback |

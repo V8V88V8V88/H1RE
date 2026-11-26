@@ -1,14 +1,18 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "@shared/schema";
+import { GoogleGenerativeAI, type GenerativeModel } from "@google/generative-ai";
+import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "../shared/schema.js";
 
-// Initialize the Gemini API
-const apiKey = process.env.GEMINI_API_KEY?.trim();
-if (!apiKey) {
-  console.error("GEMINI_API_KEY is missing in .env file");
-  throw new Error("GEMINI_API_KEY is required. Please set it in your .env file.");
+// Lazily create the Gemini model so a missing key fails the request, not the whole server
+let model: GenerativeModel | undefined;
+function getModel(): GenerativeModel {
+  if (!model) {
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not set on the server.");
+    }
+    model = new GoogleGenerativeAI(apiKey).getGenerativeModel({ model: "gemini-2.5-flash" });
+  }
+  return model;
 }
-const genAI = new GoogleGenerativeAI(apiKey);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // Job role descriptions
 const jobRoleDescriptions: Record<string, string> = {
@@ -224,7 +228,7 @@ Be honest but helpful. The scores should reflect the resume's quality for the sp
   try {
     const systemMessage = "You are an expert resume analyst with deep knowledge of recruitment, applicant tracking systems, and industry-specific requirements. Always respond with valid JSON only, no markdown, no code blocks, no explanations.";
     
-    const result = await model.generateContent({
+    const result = await getModel().generateContent({
       contents: [{ role: "user", parts: [{ text: `${systemMessage}\n\n${prompt}` }] }],
       generationConfig: {
         responseMimeType: "application/json",

@@ -273,7 +273,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             {recommendations.filter((r: Recommendation) => r.type === "strength").length > 0 && (
               <div className="rounded-md bg-blue-50 dark:bg-zinc-900 p-4 border border-blue-200 dark:border-zinc-800">
                 <div className="flex">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                   </div>
                   <div className="ml-3">
@@ -292,7 +292,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             {recommendations.filter((r: Recommendation) => r.type === "improvement").length > 0 && (
               <div className="rounded-md bg-yellow-50 dark:bg-zinc-900 p-4 border border-yellow-200 dark:border-zinc-800">
                 <div className="flex">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg className="h-5 w-5 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                   </div>
                   <div className="ml-3">
@@ -311,7 +311,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             {recommendations.filter((r: Recommendation) => r.type === "next-step").length > 0 && (
               <div className="rounded-md bg-green-50 dark:bg-zinc-900 p-4 border border-green-200 dark:border-zinc-800">
                 <div className="flex">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg className="h-5 w-5 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
                   </div>
                   <div className="ml-3">
@@ -327,7 +327,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             )}
             
             <button 
-              className="mt-4 flex w-full items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-4 flex w-full items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-xs hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => {
                 setIsGeneratingPDF(true);
                 try {
@@ -362,7 +362,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
         <div className="mt-8 flex justify-center">
           <button
             onClick={onNewAnalysis}
-            className="flex items-center justify-center gap-2 rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white px-6 py-3 font-medium shadow-sm hover:shadow-md transition-all duration-200"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white px-6 py-3 font-medium shadow-xs hover:shadow-md transition-all duration-200"
           >
             <FileText className="h-5 w-5" />
             Next Resume Analyze

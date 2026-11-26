@@ -8,15 +8,7 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [
-    react({
-      // Improve React plugin performance
-      babel: {
-        plugins: [
-          // Add plugin for better React performance 
-          ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }]
-        ]
-      }
-    }),
+    react(),
   ],
   resolve: {
     alias: {

@@ -1,4 +1,4 @@
-import { users, resumeAnalyses, type User, type InsertUser, type ResumeAnalysis, type InsertResumeAnalysis } from "@shared/schema";
+import { users, resumeAnalyses, type User, type InsertUser, type ResumeAnalysis, type InsertResumeAnalysis } from "../shared/schema.js";
 
 
 export interface IStorage {

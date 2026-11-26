@@ -40,9 +40,9 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
                       selectedJobRole === "custom" && customJobRole.trim().length > 0);
 
   return (
-    <div className="apple-card shadow-xl theme-transition">
+    <div className="apple-card theme-transition">
       <div className="p-6">
-        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Job Role Selection</h2>
+        <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">2. Target role</h2>
         
         <div className="mb-4">
           <Label htmlFor="job-role" className="mb-2 block text-gray-900 dark:text-white">
@@ -121,7 +121,7 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
         <Button 
           onClick={handleAnalyzeClick}
           disabled={!canAnalyze || isAnalyzing}
-          className="w-full rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white shadow-xs hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Search className="mr-2 h-4 w-4" /> 
           {isAnalyzing ? "Analyzing..." : "Analyze Resume"}

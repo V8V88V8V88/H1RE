@@ -94,73 +94,44 @@ const ResumeInput = ({ id, resumeText, setResumeText, compact = false }: ResumeI
   };
 
   return (
-    <div id={id} className="apple-card shadow-xl theme-transition overflow-hidden">
+    <div id={id} className="apple-card theme-transition overflow-hidden">
       <div className="relative">
-        {/* Decorative top accent */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0078d4] via-[#00a4ef] to-[#0078d4]"></div>
-        
-        <div className="p-8">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Resume Input</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Upload your resume file or paste the content directly</p>
-          </div>
+        <div className="p-6">
+          <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">1. Your resume</h2>
           
-          {/* File Upload */}
-          <div className="mb-8">
-            <Label htmlFor="resume-upload" className="mb-3 block text-base font-medium text-gray-900 dark:text-white">
-              Upload Resume Document
-            </Label>
-            <div 
-              className={`group relative flex justify-center rounded-2xl border-2 border-dashed transition-all duration-300 ${
-                dragActive 
-                  ? 'border-[#0078d4] bg-[#0078d4]/10 dark:bg-[#0078d4]/20 scale-[1.02]' 
-                  : 'border-gray-300 dark:border-zinc-800 bg-gray-50/50 dark:bg-zinc-900/50 hover:border-[#0078d4]/50 hover:bg-[#0078d4]/5 dark:hover:bg-[#0078d4]/10'
-              }`}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <div className="p-10 space-y-4 text-center">
-                <div className="space-y-2">
-                  <div className="flex flex-row justify-center items-center gap-3">
-                    <Label htmlFor="resume-upload" className="relative cursor-pointer rounded-lg px-6 py-3 bg-[#0078d4] hover:bg-[#0066b3] text-white font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
-                      <span className="flex items-center gap-2">
-                        <UploadCloud className="h-4 w-4" />
-                        Upload a file
-                      </span>
-                      <input 
-                        id="resume-upload" 
-                        name="resume-upload" 
-                        type="file" 
-                        accept=".pdf,.docx" 
-                        className="sr-only" 
-                        onChange={handleFileUpload}
-                        disabled={uploadResumeMutation.isPending}
-                      />
-                    </Label>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">or drag and drop</p>
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {uploadResumeMutation.isPending 
-                      ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg className="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Uploading...
-                        </span>
-                      )
-                      : "PDF or DOCX up to 10MB"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+          {/* File Upload: the whole drop zone is clickable */}
+          <label
+            htmlFor="resume-upload"
+            className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 py-10 text-center transition-colors ${
+              dragActive
+                ? 'border-[#0078d4] bg-[#0078d4]/5'
+                : 'border-gray-300 dark:border-zinc-700 hover:border-[#0078d4]/60 hover:bg-gray-50 dark:hover:bg-zinc-800/40'
+            }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <UploadCloud className="h-8 w-8 text-gray-400 dark:text-zinc-500" />
+            <span className="inline-flex items-center rounded-lg bg-[#0078d4] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0066b3]">
+              {uploadResumeMutation.isPending ? "Uploading…" : "Upload a file"}
+            </span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              or drag and drop · PDF or DOCX, up to 4MB
+            </span>
+            <input
+              id="resume-upload"
+              name="resume-upload"
+              type="file"
+              accept=".pdf,.docx"
+              className="sr-only"
+              onChange={handleFileUpload}
+              disabled={uploadResumeMutation.isPending}
+            />
+          </label>
+
           {/* Paste Text Toggle Button */}
           {!showPasteSection && (
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 flex justify-center">
               <button
                 onClick={() => setShowPasteSection(true)}
                 className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-[#0078d4] dark:hover:text-[#0078d4] transition-colors"
@@ -196,7 +167,7 @@ const ResumeInput = ({ id, resumeText, setResumeText, compact = false }: ResumeI
                   id="resume-text" 
                   value={resumeText}
                   onChange={(e) => setResumeText(e.target.value)}
-                  className={`w-full border-2 border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-[#0078d4] focus:ring-4 focus:ring-[#0078d4]/10 resize-none rounded-xl transition-all shadow-sm focus:shadow-md ${compact ? 'min-h-[200px] max-h-[300px]' : 'min-h-[400px]'}`}
+                  className={`w-full border-2 border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-[#0078d4] focus:ring-4 focus:ring-[#0078d4]/10 resize-none rounded-xl transition-all shadow-xs focus:shadow-md ${compact ? 'min-h-[200px] max-h-[300px]' : 'min-h-[400px]'}`}
                   placeholder="Paste your resume content here..."
                 />
                 {resumeText.length > 0 && (

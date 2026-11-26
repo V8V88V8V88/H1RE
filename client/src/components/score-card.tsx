@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { badge } from "@shared/schema";
+import type { z } from "zod";
 
 interface ScoreCardProps {
   overallScore: number;
@@ -7,7 +8,7 @@ interface ScoreCardProps {
   atsScore: number;
   keywordScore: number;
   formatScore: number;
-  earnedBadges: typeof badge._type[];
+  earnedBadges: z.infer<typeof badge>[];
 }
 
 const ScoreCard = ({ 

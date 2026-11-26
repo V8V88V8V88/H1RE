@@ -1,6 +1,6 @@
 const LoadingOverlay = () => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs transition-opacity">
       <div className="rounded-2xl bg-white dark:bg-zinc-900 p-10 shadow-2xl border border-gray-200 dark:border-zinc-800 max-w-md w-full mx-4">
         <div className="flex flex-col items-center">
           <div className="relative mb-8">

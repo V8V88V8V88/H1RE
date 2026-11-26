@@ -1,9 +1,9 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { resumeAnalysisRequestSchema } from "@shared/schema";
+import { storage } from "./storage.js";
+import { resumeAnalysisRequestSchema } from "../shared/schema.js";
 // Import Gemini API implementation instead of OpenAI
-import { analyzeResume } from "./gemini";
+import { analyzeResume } from "./gemini.js";
 import multer from "multer";
 import * as mammoth from "mammoth";
 import { PDFParse } from "pdf-parse";
@@ -17,7 +17,7 @@ interface MulterRequest extends Request {
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB limit
+    fileSize: 4 * 1024 * 1024, // 4MB: Vercel caps request bodies at ~4.5MB
   },
   fileFilter: (req: Express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     // Accept only PDF and DOCX files
