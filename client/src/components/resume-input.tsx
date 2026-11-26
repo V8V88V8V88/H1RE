@@ -203,7 +203,7 @@ const ResumeInput = ({ id, resumeText, setResumeText, compact = false }: ResumeI
                   id="resume-text" 
                   value={resumeText}
                   onChange={(e) => setResumeText(e.target.value)}
-                  className={`w-full border-2 border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-[#0078d4] focus:ring-4 focus:ring-[#0078d4]/10 resize-none rounded-xl transition-all shadow-xs focus:shadow-md ${compact ? 'min-h-[200px] max-h-[300px]' : 'min-h-[400px]'}`}
+                  className={`w-full border-2 border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-[#0078d4] focus:ring-4 focus:ring-[#0078d4]/10 resize-none rounded-xl transition-all shadow-xs focus:shadow-md ${compact ? 'min-h-[200px] max-h-[300px]' : 'min-h-[240px] md:min-h-[320px]'}`}
                   placeholder="Paste your resume content here..."
                 />
                 {resumeText.length > 0 && (

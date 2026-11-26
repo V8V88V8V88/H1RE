@@ -25,10 +25,6 @@ function Home() {
     },
     onSuccess: (data) => {
       setAnalysisResult(data);
-      toast({
-        title: "Analysis Complete!",
-        description: "Your resume has been analyzed successfully.",
-      });
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);

@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Award } from "lucide-react";
 import { badge } from "@shared/schema";
 import type { z } from "zod";
 
@@ -33,11 +34,18 @@ const ScoreCard = ({
     return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
   };
 
+  const getRingClass = () => {
+    if (overallScore < 50) return "text-red-500";
+    if (overallScore < 70) return "text-yellow-500";
+    if (overallScore < 90) return "text-[#0078d4]";
+    return "text-green-500";
+  };
+
   const circumference = 251.2; // 2 * π * r (where r=40)
   const offset = circumference - (circumference * overallScore) / 100;
   
   return (
-    <Card className="shadow-md">
+    <Card className="apple-card">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between">
           <div>
@@ -64,8 +72,9 @@ const ScoreCard = ({
                 cx="50" 
                 cy="50" />
               <circle 
-                className="text-primary" 
+                className={getRingClass()} 
                 strokeWidth="10" 
+                strokeLinecap="round" 
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
                 stroke="currentColor" 
@@ -130,7 +139,7 @@ const ScoreCard = ({
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
               <div 
-                className="h-full rounded-full bg-primary" 
+                className="h-full rounded-full bg-[#0078d4]" 
                 style={{ width: `${keywordScore}%` }}></div>
             </div>
           </div>
@@ -155,7 +164,7 @@ const ScoreCard = ({
             <div className="flex flex-wrap gap-2">
               {earnedBadges.map((badge) => (
                 <span key={badge.id} className="flex items-center rounded-full border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 px-3 py-1 text-xs font-medium text-gray-900 dark:text-white">
-                  <i className={`${badge.icon} mr-1 text-primary`}></i>
+                  <Award className="mr-1 h-3.5 w-3.5 text-[#0078d4]" />
                   <span>{badge.name}</span>
                 </span>
               ))}

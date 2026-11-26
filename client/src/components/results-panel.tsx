@@ -8,7 +8,7 @@ import ScoreCard from "@/components/score-card";
 import AnalysisCard from "@/components/analysis-card";
 import { generatePDFReport } from '../lib/pdf-generator';
 import { useState } from 'react';
-import { Briefcase, BarChart, User, FileText, Check, X } from 'lucide-react';
+import { Briefcase, BarChart, User, FileText, Check, X, Download, RotateCcw } from 'lucide-react';
 
 interface ResultsPanelProps {
   result: ResumeAnalysisResponse;
@@ -75,6 +75,15 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
   
   const candidateName = extractNameFromResume(resumeText);
 
+  const downloadReport = () => {
+    setIsGeneratingPDF(true);
+    try {
+      generatePDFReport(result, resumeText);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   // Helper function to get appropriate color class based on score
   const getScoreColorClass = (score: number) => {
     if (score < 50) return "text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30";
@@ -98,6 +107,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
     if (!level) return "Not specified";
     
     switch (level) {
+      case "fresher": return "Fresher (No experience)";
       case "entry": return "Entry Level (0-2 years)";
       case "mid": return "Mid Level (3-5 years)";
       case "senior": return "Senior Level (6+ years)";
@@ -109,9 +119,32 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
   return (
     <div className="flex flex-col space-y-6">
       {/* Target Position Information */}
-      <div className="apple-card shadow-xl theme-transition">
+      <div className="apple-card theme-transition">
         <div className="p-6">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Analysis Results</h2>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Analysis Results</h2>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={downloadReport}
+                disabled={isGeneratingPDF}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 dark:border-zinc-700 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50"
+              >
+                <Download className="h-4 w-4" />
+                Report
+              </button>
+              {onNewAnalysis && (
+                <button
+                  type="button"
+                  onClick={onNewAnalysis}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#0078d4] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#0066b3] transition-colors"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  New analysis
+                </button>
+              )}
+            </div>
+          </div>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
             {candidateName && (
               <div className="flex items-center flex-1">
@@ -329,14 +362,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             
             <button 
               className="mt-4 flex w-full items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-xs hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={() => {
-                setIsGeneratingPDF(true);
-                try {
-                  generatePDFReport(result, resumeText);
-                } finally {
-                  setIsGeneratingPDF(false);
-                }
-              }}
+              onClick={downloadReport}
               disabled={isGeneratingPDF}
             >
               {isGeneratingPDF ? (
@@ -366,7 +392,7 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
             className="flex items-center justify-center gap-2 rounded-xl bg-[#0078d4] hover:bg-[#0066b3] text-white px-6 py-3 font-medium shadow-xs hover:shadow-md transition-all duration-200"
           >
             <FileText className="h-5 w-5" />
-            Next Resume Analyze
+            Analyze another resume
           </button>
         </div>
       )}

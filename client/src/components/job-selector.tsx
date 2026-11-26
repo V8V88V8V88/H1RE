@@ -126,6 +126,11 @@ const JobSelector = ({ resumeText, onAnalyze, isAnalyzing }: JobSelectorProps) =
           <Search className="mr-2 h-4 w-4" /> 
           {isAnalyzing ? "Analyzing..." : "Analyze Resume"}
         </Button>
+        {!canAnalyze && !isAnalyzing && (
+          <p className="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">
+            {resumeText.trim().length === 0 ? "Upload or paste your resume to continue" : "Choose a target role to continue"}
+          </p>
+        )}
       </div>
     </div>
   );
