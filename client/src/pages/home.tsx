@@ -81,11 +81,11 @@ function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="mb-3 text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-              Check your resume against the job you want
+            <h2 className="mb-3 text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-balance">
+              Get your resume job-ready
             </h2>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400">
-              Upload a PDF or DOCX, pick a role, and get scores for grammar, ATS fit and keywords with concrete fixes.
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 text-balance">
+              Upload your resume, pick a role, and get scores for grammar, ATS fit and keywords, with clear fixes.
             </p>
           </motion.div>
         )}

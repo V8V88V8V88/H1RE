@@ -12,7 +12,7 @@
 - Scores it for **grammar**, **ATS compatibility**, **keyword match** and **format** against a chosen job role and experience level.
 - Lists what to fix, and lets you download the report as a PDF.
 
-Analysis is done by Google Gemini on the server; nothing is stored.
+Resumes are only used to generate the analysis and are not saved.
 
 ## Run locally
 
