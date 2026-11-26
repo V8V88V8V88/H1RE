@@ -6,7 +6,6 @@ import { resumeAnalysisRequestSchema } from "../shared/schema.js";
 import { analyzeResume } from "./gemini.js";
 import multer from "multer";
 import * as mammoth from "mammoth";
-import { PDFParse } from "pdf-parse";
 
 // Define Request type with file property from multer
 interface MulterRequest extends Request {
@@ -78,6 +77,8 @@ export function configureRoutes(app: Express) {
       // Parse the file based on its mimetype
       if (req.file.mimetype === "application/pdf") {
         // Parse PDF with pdf-parse v2 API
+        // Loaded on demand: pdfjs is heavy and should not affect other routes
+        const { PDFParse } = await import("pdf-parse");
         const parser = new PDFParse({ data: req.file.buffer });
         const pdfData = await parser.getText();
         await parser.destroy();
