@@ -8,7 +8,7 @@ import ScoreCard from "@/components/score-card";
 import AnalysisCard from "@/components/analysis-card";
 import { generatePDFReport } from '../lib/pdf-generator';
 import { useState } from 'react';
-import { Briefcase, BarChart, User, FileText } from 'lucide-react';
+import { Briefcase, BarChart, User, FileText, Check, X } from 'lucide-react';
 
 interface ResultsPanelProps {
   result: ResumeAnalysisResponse;
@@ -189,19 +189,20 @@ const ResultsPanel = ({ result, resumeText = "", onNewAnalysis }: ResultsPanelPr
         >
           <div className="mb-4">
             <h3 className="mb-2 text-sm font-medium">Section Detection</h3>
-            <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
               {atsFeedback.sections.map((section: SectionStatus, index: number) => (
-                <div key={index} className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-zinc-900 px-3 py-2 border border-gray-200 dark:border-zinc-800">
-                  <div className="flex items-center">
-                    {section.found ? (
-                      <svg className="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    ) : (
-                      <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    )}
-                    <span className="ml-2 text-sm">{section.name}</span>
-                  </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">{section.found ? "Found" : "Missing"}</span>
-                </div>
+                <span
+                  key={index}
+                  title={section.found ? "Found" : "Missing"}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm ${
+                    section.found
+                      ? "border-green-500/30 bg-green-500/10 text-green-700 dark:text-green-400"
+                      : "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-400"
+                  }`}
+                >
+                  {section.found ? <Check className="h-3.5 w-3.5" /> : <X className="h-3.5 w-3.5" />}
+                  {section.name}
+                </span>
               ))}
             </div>
           </div>
