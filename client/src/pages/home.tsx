@@ -57,7 +57,6 @@ function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-black theme-transition">
-      {/* Header: just the brand and theme toggle, no bar */}
       <header className="container mx-auto max-w-7xl px-4 pt-5 flex items-center justify-between">
         <button
           type="button"
@@ -75,7 +74,6 @@ function Home() {
         {/* Loading Overlay */}
         {analyzeResumeMutation.isPending && <LoadingOverlay />}
 
-        {/* Intro - only before the user has started */}
         {!resumeText && !analyzeResumeMutation.isPending && !analysisResult && (
           <motion.div
             className="mx-auto mb-8 max-w-2xl text-center"

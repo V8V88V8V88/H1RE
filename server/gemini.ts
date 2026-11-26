@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI, type GenerativeModel } from "@google/generative-ai";
 import { ResumeAnalysisRequest, ResumeAnalysisResponse } from "../shared/schema.js";
 
-// Lazily create the Gemini model so a missing key fails the request, not the whole server
 let model: GenerativeModel | undefined;
 function getModel(): GenerativeModel {
   if (!model) {

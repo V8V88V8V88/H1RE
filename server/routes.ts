@@ -16,7 +16,7 @@ interface MulterRequest extends Request {
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 4 * 1024 * 1024, // 4MB: Vercel caps request bodies at ~4.5MB
+    fileSize: 4 * 1024 * 1024,
   },
   fileFilter: (req: Express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     // Accept only PDF and DOCX files
@@ -77,9 +77,6 @@ export function configureRoutes(app: Express) {
       // Parse the file based on its mimetype
       if (req.file.mimetype === "application/pdf") {
         // Parse PDF with pdf-parse v2 API
-        // Loaded on demand: pdfjs is heavy and should not affect other routes.
-        // pdf-parse/worker polyfills DOMMatrix etc. via @napi-rs/canvas, which
-        // serverless Node (Vercel) does not provide.
         const { CanvasFactory } = await import("pdf-parse/worker");
         const { PDFParse } = await import("pdf-parse");
         const parser = new PDFParse({ data: req.file.buffer, CanvasFactory });

@@ -1,7 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "http";
 
-// Load the Express app lazily so a startup error is reported instead of
-// crashing the function with an opaque FUNCTION_INVOCATION_FAILED.
 let appPromise: Promise<(req: IncomingMessage, res: ServerResponse) => void> | undefined;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {

@@ -27,7 +27,6 @@ export function ThemeProvider({
     media().matches ? "dark" : "light"
   );
 
-  // Follow OS theme changes live
   useEffect(() => {
     const mq = media();
     const onChange = () => setSystemTheme(mq.matches ? "dark" : "light");
@@ -44,7 +43,6 @@ export function ThemeProvider({
   }, [resolvedTheme]);
 
   const setTheme = (next: Theme) => {
-    // Picking the same theme as the OS goes back to following the OS
     if (next === systemTheme) {
       localStorage.removeItem(storageKey);
       setThemeState("system");

@@ -99,7 +99,6 @@ const ResumeInput = ({ id, resumeText, setResumeText, compact = false }: ResumeI
         <div className="p-6">
           <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">1. Your resume</h2>
           
-          {/* File Upload: the whole drop zone is clickable */}
           <label
             htmlFor="resume-upload"
             className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 py-10 text-center transition-colors ${
