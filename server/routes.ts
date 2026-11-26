@@ -77,9 +77,12 @@ export function configureRoutes(app: Express) {
       // Parse the file based on its mimetype
       if (req.file.mimetype === "application/pdf") {
         // Parse PDF with pdf-parse v2 API
-        // Loaded on demand: pdfjs is heavy and should not affect other routes
+        // Loaded on demand: pdfjs is heavy and should not affect other routes.
+        // pdf-parse/worker polyfills DOMMatrix etc. via @napi-rs/canvas, which
+        // serverless Node (Vercel) does not provide.
+        const { CanvasFactory } = await import("pdf-parse/worker");
         const { PDFParse } = await import("pdf-parse");
-        const parser = new PDFParse({ data: req.file.buffer });
+        const parser = new PDFParse({ data: req.file.buffer, CanvasFactory });
         const pdfData = await parser.getText();
         await parser.destroy();
         text = pdfData.text;
